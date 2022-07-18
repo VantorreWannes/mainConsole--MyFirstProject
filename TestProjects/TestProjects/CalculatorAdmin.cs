@@ -1,14 +1,14 @@
 namespace ManyProjects
 {
-    public class Calculator
+    public class CalculatorAdmin
     {
 
         //class being called from mainHub
-        public void calculatorMain()
+        public void calculatorMainAdmin()
         {
 
-
             //declare here.
+            //bool for restarting the program
             bool DoubleNotLong = false;
             int Counter = 0;
             long Output = 0;
@@ -28,9 +28,9 @@ namespace ManyProjects
             double OutputDoubleFirst = 0;
 
 
-            //user guide
+
             Console.WriteLine("\nInput your expression as a single line.");
-            Console.WriteLine("Put an F infront of your calculation if you'd like to work with double integers: \"F 1,5 + 1,5\" instead of \"1 + 1\" ");
+            Console.WriteLine("Put an F infront of your calculation if you'd like to work with double integers: \"F 1+1\" ");
 
 
             String CurrentExpressionAsStringTemp = Console.ReadLine();
@@ -46,27 +46,26 @@ namespace ManyProjects
 
             Console.WriteLine("Your current array is: " + InputsTemp[0]);
 
-            //checks if the F flag is used 
+            //checks if the F flag is used and repeats the program if yes
             if (InputsTemp[0] == "F")
             {
 
                 DoubleNotLong = true;
                 Console.WriteLine("DoubleNotLong is true");
-                
+
 
             }
-            //replaces all possible seperators with R
+
             CurrentExpressionAsString = String.Concat(InputsTemp);
             CurrentExpressionAsStringTemp = CurrentExpressionAsString.Replace("+", "R+R").Replace("-", "R-R").Replace("*", "R*R").Replace("/", "R/R").Replace("F", "").Replace(" ", "");
             Console.WriteLine("This is CurrentExpressionAsString: " + CurrentExpressionAsStringTemp);
-            //splits at R
             string[] Inputs = CurrentExpressionAsStringTemp.Split('R');
 
 
             Console.WriteLine("Your current arrayList is: " + Inputs[0]);
 
 
-    
+
             //find the number of calculations it needs to do
             NumberOfCalculations = ((Inputs.Length) / 3);
             Console.WriteLine("Your number of calculations are: " + NumberOfCalculations);

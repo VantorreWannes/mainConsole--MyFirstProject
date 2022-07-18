@@ -1,24 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\andre\\Source\\Repos\\mainConsole\\TestProjects\\TestProjects\\TestProjects.csproj": {}
+    "C:\\Users\\Wannes\\Desktop\\JokNavi\\Code C#\\TestProjects\\TestProjects\\TestProjects.csproj": {}
   },
   "projects": {
-    "C:\\Users\\andre\\Source\\Repos\\mainConsole\\TestProjects\\TestProjects\\TestProjects.csproj": {
+    "C:\\Users\\Wannes\\Desktop\\JokNavi\\Code C#\\TestProjects\\TestProjects\\TestProjects.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\andre\\Source\\Repos\\mainConsole\\TestProjects\\TestProjects\\TestProjects.csproj",
+        "projectUniqueName": "C:\\Users\\Wannes\\Desktop\\JokNavi\\Code C#\\TestProjects\\TestProjects\\TestProjects.csproj",
         "projectName": "TestProjects",
-        "projectPath": "C:\\Users\\andre\\Source\\Repos\\mainConsole\\TestProjects\\TestProjects\\TestProjects.csproj",
-        "packagesPath": "C:\\Users\\andre\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\andre\\Source\\Repos\\mainConsole\\TestProjects\\TestProjects\\obj\\",
+        "projectPath": "C:\\Users\\Wannes\\Desktop\\JokNavi\\Code C#\\TestProjects\\TestProjects\\TestProjects.csproj",
+        "packagesPath": "C:\\Users\\Wannes\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Wannes\\Desktop\\JokNavi\\Code C#\\TestProjects\\TestProjects\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\andre\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Users\\Wannes\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
