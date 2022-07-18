@@ -23,6 +23,7 @@ namespace ManyProjects
 
             Console.WriteLine("Input your expression as a single line.");
             String CurrentExpressionAsString = Console.ReadLine();
+
             if (CurrentExpressionAsString.Length >= 3)
             {
 
