@@ -17,7 +17,7 @@ namespace ManyProjects
 
             ConsoleKeyInfo input;
             do
-            {
+            { 
                 input = Console.ReadKey(true);
                 //Console.WriteLine("\nYou entered: " + input.Key);
 
@@ -27,23 +27,23 @@ namespace ManyProjects
                 switch (input.Key)
                 {
                     //NumPad1
-                    case ConsoleKey.NumPad1:
+                    case ConsoleKey.D1:
                         var longestWordInAList = new longestWordInAList();
                         longestWordInAList.ClassOne();
                         break;
 
-                    case ConsoleKey.NumPad2:
+                    case ConsoleKey.D2:
                         var SimpleCharacterCounter = new SimpleCharacterCounter();
                         SimpleCharacterCounter.ClassTwo();
                         break;
 
 
-                    case ConsoleKey.NumPad3:
+                    case ConsoleKey.D3:
                         var longestWordInAListBetter = new longestWordInAListBetter();
                         longestWordInAListBetter.ClassOneV2();
                         break;
 
-                    case ConsoleKey.NumPad4:
+                    case ConsoleKey.D4:
                         var Calculator = new Calculator();
                         Calculator.calculatorMain();
                         Console.WriteLine("did it");
