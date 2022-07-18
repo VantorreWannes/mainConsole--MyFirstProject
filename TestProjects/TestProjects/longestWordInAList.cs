@@ -11,7 +11,7 @@ namespace ManyProjects
             Console.WriteLine("The longest word in this list is:\n");
             string[] readText = File.ReadAllLines("longestWordList.txt");
 
-            //String wordRn = ""; 
+            //String wordRn = "";
             int counter = 0;
             string word = "";
             int lengthOfWord = 0;

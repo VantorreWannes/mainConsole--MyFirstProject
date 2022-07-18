@@ -1,4 +1,6 @@
-﻿namespace ManyProjects
+﻿using System;
+using System.IO;
+namespace ManyProjects
 {
     class Program
     {
@@ -9,8 +11,9 @@
             Console.WriteLine("Please write 1 for a longest word in a list checker.\n");
             Console.WriteLine("Please write 2 for a simple character counter.\n");
             Console.WriteLine("Please write 3 for a better longest word in a sentence checker.\n");
+            Console.WriteLine("Please write 4 for a calculator.\n");
             Console.WriteLine("Press ESC to stop");
-
+            
 
             ConsoleKeyInfo input;
             do
@@ -18,12 +21,12 @@
                 input = Console.ReadKey(true);
                 //Console.WriteLine("\nYou entered: " + input.Key);
 
+
+
+                
+                switch (input.Key)
                 {
-
-                    
-                    switch (input.Key)
-                    {
-
+                    //NumPad1
                     case ConsoleKey.NumPad1:
                         var longestWordInAList = new longestWordInAList();
                         longestWordInAList.ClassOne();
@@ -40,26 +43,24 @@
                         longestWordInAListBetter.ClassOneV2();
                         break;
 
-                   /*  case ConsoleKey.NumPad4:
+                    case ConsoleKey.NumPad4:
                         var Calculator = new Calculator();
-                        Calculator.MainClass();
+                        Calculator.calculatorMain();
+                        Console.WriteLine("did it");
                         break;
+                         
 
-                    */
                 }
 
-                   
+
                 Console.WriteLine("MAIN MENU!");
                 Console.WriteLine("Please write 1 for a longest word in a list checker.\n");
                 Console.WriteLine("Please write 2 for a simple character counter.\n");
                 Console.WriteLine("Please write 3 for a better longest word in a sentence checker.\n");
                 Console.WriteLine("Press ESC to stop");
-                     
-                }
+
 
             } while (input.Key != ConsoleKey.Escape);
-
         }
     }
 }
-
