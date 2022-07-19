@@ -36,7 +36,7 @@ namespace ManyProjects
                         var SimpleCharacterCounter = new SimpleCharacterCounter();
                         SimpleCharacterCounter.ClassTwo();
                         break;
-
+                        
 
                     case ConsoleKey.NumPad3:
                         var longestWordInAListBetter = new longestWordInAListBetter();
@@ -48,7 +48,13 @@ namespace ManyProjects
                         Calculator.calculatorMain();
                         //Console.WriteLine("You did it!"); 
                         break;
-                         
+
+                    case ConsoleKey.NumPad5:
+                        var CalculatorHelper = new CalculatorHelper();
+                        CalculatorHelper.calculatorMain();
+                        //Console.WriteLine("You did it!"); 
+                        break;
+
 
                 }
 
