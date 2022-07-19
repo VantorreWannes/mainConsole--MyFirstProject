@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TestProjects
 {
-    internal class CalculatorHelper
+    public class CalculatorHelper
     {
         /// <summary>
         /// This method takes in a single line expression string, removes all whitespace, and separates expressions inside of parentheses.
