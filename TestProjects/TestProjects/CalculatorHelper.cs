@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TestProjects
 {
-    static class CalculatorHelper
+    public static class CalculatorHelper
     {
         static CalculatorHelper()
         {
@@ -17,7 +17,7 @@ namespace TestProjects
         /// </summary>
         /// <param name="Expression"></param> is the mathematical expression that the user input
         /// <returns>List/<String/> SubExpressions</returns> the list of sub-expressions within the expression.
-        static List<string> InterpretParentheses(string Expression)
+        public static List<string> InterpretParentheses(string Expression)
         {
             List<string> SubExpressions = new List<string>();
             string temp = string.Concat(Expression.Where(c => !char.IsWhiteSpace(c)));
@@ -42,7 +42,7 @@ namespace TestProjects
         /// </summary>
         /// <param name="Expression"></param> A simple expression as a string in the form (number)(operator)(number)
         /// <returns></returns> Returns the solution of the simple expression as a float.
-        static float EvaluateSimpleExpression(string Expression)
+        public static float EvaluateSimpleExpression(string Expression)
         {
             float Value1 = 0, Value2 = 0;
             int OperatorLocation = 0;
@@ -86,7 +86,7 @@ namespace TestProjects
 
         }
 
-        static bool TestForSimple(string Expression)
+        public static bool TestForSimple(string Expression)
         {
             
             return false;
