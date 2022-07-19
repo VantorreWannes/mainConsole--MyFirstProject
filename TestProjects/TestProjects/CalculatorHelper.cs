@@ -13,12 +13,12 @@ namespace TestProjects
         /// </summary>
         /// <param name="Expression"></param> is the mathematical expression that the user input
         /// <returns>List/<String/> SubExpressions</returns> the list of sub-expressions within the expression.
-        private List<String> InterpretParentheses(String Expression)
+        private List<string> InterpretParentheses(string Expression)
         {
-            List<String> SubExpressions = new List<String>();
-            String temp = String.Concat(Expression.Where(c => !char.IsWhiteSpace(c)));
-            String[] tempArray1 = temp.Split("(");
-            String[] tempArray2;
+            List<string> SubExpressions = new List<string>();
+            string temp = string.Concat(Expression.Where(c => !char.IsWhiteSpace(c)));
+            string[] tempArray1 = temp.Split("(");
+            string[] tempArray2;
             for (int i = 0; i < tempArray1.Length; i++)
             {
                 tempArray2 = tempArray1[i].Split(")");
@@ -38,11 +38,11 @@ namespace TestProjects
         /// </summary>
         /// <param name="Expression"></param> A simple expression as a string in the form (number)(operator)(number)
         /// <returns></returns> Returns the solution of the simple expression as a float.
-        private float EvaluateSimpleExpression(String Expression)
+        private float EvaluateSimpleExpression(string Expression)
         {
             float Value1 = 0, Value2 = 0;
             int OperatorLocation = 0;
-            String[] Operators = { "+", "-", "*", "/", "^" };
+            string[] Operators = { "+", "-", "*", "/", "^" };
             int index = 0;
 
             while((OperatorLocation == 0) && index<Operators.Length)
@@ -55,7 +55,7 @@ namespace TestProjects
             
             Value1 = float.Parse(Expression.Substring(0, OperatorLocation));
             Value2 = float.Parse(Expression.Substring(OperatorLocation+1));
-            String Operator = Expression.Substring(OperatorLocation, 1);
+            string Operator = Expression.Substring(OperatorLocation, 1);
 
             if (Operator.Equals("+"))
             {
@@ -80,6 +80,12 @@ namespace TestProjects
 
             return float.MinValue;//If the function is used correctly, this statement should never occur.
 
+        }
+
+        private bool TestForSimple(string Expression)
+        {
+            
+            return false;
         }
     }
 }
