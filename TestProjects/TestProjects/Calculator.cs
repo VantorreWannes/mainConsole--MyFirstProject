@@ -9,16 +9,12 @@ namespace ManyProjects
 
 
             //declare here.
-            bool DoubleNotLong = false;
             int Counter = 0;
-            long Output = 0;
             string OutputStringFirst = "";
-            long NumberOfCalculations;
-            string InputThreeString;
-            long InputOne;
-            long InputTwo;
-            long InputThree;
-            long OutputInt;
+            long NumberOfCalculations = 0;
+            string InputOneString;
+            string InputOperator;
+            string InputTwoString;
             string CurrentExpressionAsString;
             double OutputDouble = 0;
             double InputOneDouble = 0;
@@ -26,144 +22,125 @@ namespace ManyProjects
             string OutputStringDoubleFirst;
             long OutputFirst = 0;
             double OutputDoubleFirst = 0;
+            string CurrentExpressionAsStringTemp;
+            bool IsInputInvalid = false;
 
 
             //user guide
             Console.WriteLine("\nInput your expression as a single line.");
-            Console.WriteLine("Put an F infront of your calculation if you'd like to work with double integers: \"F 1,5 + 1,5\" instead of \"1 + 1\" ");
+            Console.WriteLine("Supports Double (For example: 1,5 and 50,3) and Long numbers (Whole Numbers)");
+            Console.WriteLine("Supports \"+\", \"-\", \"*\", \"/\",  ");
 
 
-            String CurrentExpressionAsStringTemp = Console.ReadLine();
+            CurrentExpressionAsString = Console.ReadLine();
 
 
             //adds a TempChar + operator symbol so we can cut the TempChar and form an array there (123+123-123*123/123)
-            CurrentExpressionAsStringTemp = CurrentExpressionAsStringTemp.Replace(" ", "M").Replace("F", "FM");
 
-            Console.WriteLine("Your current string is: " + CurrentExpressionAsStringTemp);
+            Console.WriteLine("Your current string is: " + CurrentExpressionAsString);
 
-            //splits the Strings at the R mark and puts them into an array
-            string[] InputsTemp = CurrentExpressionAsStringTemp.Split('M');
-
-            Console.WriteLine("Your current array is: " + InputsTemp[0]);
-
-            //checks if the F flag is used 
-            if (InputsTemp[0] == "F")
-            {
-
-                DoubleNotLong = true;
-                Console.WriteLine("DoubleNotLong is true");
-                
-
-            }
             //replaces all possible seperators with R
-            CurrentExpressionAsString = String.Concat(InputsTemp);
             CurrentExpressionAsStringTemp = CurrentExpressionAsString.Replace("+", "R+R").Replace("-", "R-R").Replace("*", "R*R").Replace("/", "R/R").Replace("F", "").Replace(" ", "");
             Console.WriteLine("This is CurrentExpressionAsString: " + CurrentExpressionAsStringTemp);
+
+            //splits at R
+            string[] InputsTemp = CurrentExpressionAsStringTemp.Split('R');
+
+            var LastStringTemp = (InputsTemp.Length - 1);
+            //checks if the the calculation equals a non accepted type
+            string[] Forbidden = new string[1] { "/0"};
+            foreach (string f in Forbidden) { IsInputInvalid = ( CurrentExpressionAsString != f) ? true : false; }
+
+            //If non accepted type, do this
+            if (IsInputInvalid == true)
+            {
+                Console.WriteLine("IsInputInvalid = true");
+                for(int p = 0; p != LastStringTemp; p++)
+                {
+                     
+                    char CharactersChar = CurrentExpressionAsStringTemp[p];
+                    Console.WriteLine("Your Char list is: "+ CharactersChar);
+                }
+                Console.WriteLine("\nYour input is invalid\n");
+                System.Environment.Exit(1);
+            }
+           
             //splits at R
             string[] Inputs = CurrentExpressionAsStringTemp.Split('R');
 
+            Console.WriteLine("Your current arrayList is: " + Inputs[2]);
 
-            Console.WriteLine("Your current arrayList is: " + Inputs[0]);
-
-
-    
             //find the number of calculations it needs to do
             NumberOfCalculations = ((Inputs.Length) / 3);
             Console.WriteLine("Your number of calculations are: " + NumberOfCalculations);
 
             //puts the first 3 strings of inputs into InputOne, InputOperatorString and InputTwoString
-            string InputOneString = Inputs[Counter];
+            InputOneString = Inputs[Counter];
+
             //Console.WriteLine(Counter);
             Counter++;
-            string Inputoperator = Inputs[Counter];
+            InputOperator = Inputs[Counter];
+
             //Console.WriteLine(Counter);
             Counter++;
-            string InputTwoString = Inputs[Counter];
+            InputTwoString = Inputs[Counter];
+
             //Console.WriteLine(Counter);
+
 
             if (Inputs.Length >= 4)
             {
                 Console.WriteLine("Input.Length was >= 4");
 
-               
-                
-                if (DoubleNotLong)
-                {
-                    //convert first 2 values to double
-                    InputOneDouble = System.Convert.ToDouble(InputOneString);
-                    InputTwoDouble = System.Convert.ToDouble(InputTwoString);
+                //convert first 2 values to double
+                InputOneDouble = System.Convert.ToDouble(InputOneString);
+                InputTwoDouble = System.Convert.ToDouble(InputTwoString);
 
-                    if (Inputoperator == "+") { OutputDoubleFirst = InputOneDouble + InputTwoDouble; }
-                    if (Inputoperator == "-") { OutputDoubleFirst = InputOneDouble - InputTwoDouble; }
-                    if (Inputoperator == "*") { OutputDoubleFirst = InputOneDouble * InputTwoDouble; }
-                    if (Inputoperator == "/") { OutputDoubleFirst = InputOneDouble / InputTwoDouble; }
-                    //Console.WriteLine("Output is: " + OutputDouble);
+                if (InputOperator == "+") { OutputDoubleFirst = InputOneDouble + InputTwoDouble; }
+                if (InputOperator == "-") { OutputDoubleFirst = InputOneDouble - InputTwoDouble; }
+                if (InputOperator == "*") { OutputDoubleFirst = InputOneDouble * InputTwoDouble; }
+                if (InputOperator == "/") { OutputDoubleFirst = InputOneDouble / InputTwoDouble; }
+                //Console.WriteLine("Output is: " + OutputDouble);
 
-                }
-                else
-                {
-                    //convert first 2 values to int
-                    InputOne = System.Convert.ToInt64(InputOneString);
-                    InputTwo = System.Convert.ToInt64(InputTwoString);
-                    if (Inputoperator == "+") { OutputFirst = InputOne + InputTwo; }
-                    if (Inputoperator == "-") { OutputFirst = InputOne - InputTwo; }
-                    if (Inputoperator == "*") { OutputFirst = InputOne * InputTwo; }
-                    if (Inputoperator == "/") { OutputFirst = InputOne / InputTwo; }
-
-                    
-                }
                 OutputStringDoubleFirst = OutputDoubleFirst.ToString();
-                OutputStringFirst = OutputFirst.ToString();
-                Console.WriteLine("Your first outputString is: "+OutputStringFirst);
-                Console.WriteLine("Your first outputStringDouble is: " + OutputStringFirst);
+                Console.WriteLine("Your first outputStringDouble is: " + OutputStringDoubleFirst);
 
 
                 //loops trough the inputs from the second time untill c = number of calculations needed
                 for (long i = 0; i < NumberOfCalculations; i++)
                 {
                     Counter = 2;
-                    if (Inputs.Length < 4)
+                    if (Inputs.Length <= 4)
                     {
                         Counter = 0;
                         NumberOfCalculations = 0;
+                        Console.WriteLine("Your input was < 4 ");
                     }
                     //puts the first 3 strings of inputs into InputOne, InputOperatorString and InputTwoString
-                    OutputStringFirst = Output.ToString();
+                    OutputStringFirst = OutputStringDoubleFirst.ToString();
+                    Console.WriteLine("Your first input is: " + OutputStringFirst);
                     //Console.WriteLine(Counter);
                     Counter++;
-                    Inputoperator = Inputs[Counter];
-                    //Console.WriteLine("Your second operator is: "+Inputoperator);
+                    InputOperator = Inputs[Counter];
+                    Console.WriteLine("Your second operator is: " + InputOperator);
                     Counter++;
-                    //Console.WriteLine(Inputs[Counter]);
-                    InputThreeString = Inputs[Counter];
-                    //Console.WriteLine("Your third input is: " + InputThreeString);
-
-                    //convert the third value to int
-                    if (DoubleNotLong)
-                    {
-                        //double InputThreeDouble = (double)InputThree;
-                        double InputThreeDouble = System.Convert.ToDouble(InputThreeString);
-                        double OutputIntDouble = System.Convert.ToDouble(OutputStringFirst);
+                    InputTwoString = Inputs[Counter];
+                    Console.WriteLine("Your third input is: " + InputTwoString);
 
 
-                        if (Inputoperator == "+") { OutputDouble = OutputIntDouble + InputThreeDouble; }
-                        if (Inputoperator == "-") { OutputDouble = OutputIntDouble - InputThreeDouble; }
-                        if (Inputoperator == "*") { OutputDouble = OutputIntDouble * InputThreeDouble; }
-                        if (Inputoperator == "/") { OutputDouble = OutputIntDouble / InputThreeDouble; }
-                        Console.WriteLine("Output is: " + OutputDouble);
-                    }
-                    else
-                    {
+                    //double InputThreeDouble = (double)InputThree;
 
-                        InputThree = System.Convert.ToInt64(InputThreeString);
-                        OutputInt = System.Convert.ToInt64(OutputStringFirst);
-                        if (Inputoperator == "+") { Output = OutputInt + InputThree; }
-                        if (Inputoperator == "-") { Output = OutputInt - InputThree; }
-                        if (Inputoperator == "*") { Output = OutputInt * InputThree; }
-                        if (Inputoperator == "/") { Output = OutputInt / InputThree; }
-                        Console.WriteLine("Output is: " + Output);
 
-                    }
+                    double InputThreeDouble = System.Convert.ToDouble(InputTwoString);
+                    double OutputIntDouble = System.Convert.ToDouble(OutputStringFirst);
+
+
+                    if (InputOperator == "+") { OutputDouble = OutputIntDouble + InputThreeDouble; }
+                    if (InputOperator == "-") { OutputDouble = OutputIntDouble - InputThreeDouble; }
+                    if (InputOperator == "*") { OutputDouble = OutputIntDouble * InputThreeDouble; }
+                    if (InputOperator == "/") { OutputDouble = OutputIntDouble / InputThreeDouble; }
+                    Console.WriteLine("Output is: " + OutputDouble);
+
                 }
 
 
@@ -172,37 +149,20 @@ namespace ManyProjects
             {
                 Console.WriteLine("Input.Length was <= 4");
 
-                if (DoubleNotLong)
-                {
-                    Console.WriteLine("Double was true");
-                    //convert first 2 values to double
-                    InputOneDouble = System.Convert.ToDouble(InputOneString);
-                    InputTwoDouble = System.Convert.ToDouble(InputTwoString);
+                Console.WriteLine("Testing ideas");
 
-                    if (Inputoperator == "+") { OutputDoubleFirst = InputOneDouble + InputTwoDouble; }
-                    if (Inputoperator == "-") { OutputDoubleFirst = InputOneDouble - InputTwoDouble; }
-                    if (Inputoperator == "*") { OutputDoubleFirst = InputOneDouble * InputTwoDouble; }
-                    if (Inputoperator == "/") { OutputDoubleFirst = InputOneDouble / InputTwoDouble; }
-                    //Console.WriteLine("Output is: " + OutputDouble);
+                InputOneDouble = System.Convert.ToDouble(InputOneString);
+                InputTwoDouble = System.Convert.ToDouble(InputTwoString);
 
-                }
-                else
-                {
-                    Console.WriteLine("Double was false");
-                    //convert first 2 values to int
-                    InputOne = System.Convert.ToInt64(InputOneString);
-                    InputTwo = System.Convert.ToInt64(InputTwoString);
-                    if (Inputoperator == "+") { OutputFirst = InputOne + InputTwo; }
-                    if (Inputoperator == "-") { OutputFirst = InputOne - InputTwo; }
-                    if (Inputoperator == "*") { OutputFirst = InputOne * InputTwo; }
-                    if (Inputoperator == "/") { OutputFirst = InputOne / InputTwo; }
+                if (InputOperator == "+") { OutputDoubleFirst = InputOneDouble + InputTwoDouble; }
+                if (InputOperator == "-") { OutputDoubleFirst = InputOneDouble - InputTwoDouble; }
+                if (InputOperator == "*") { OutputDoubleFirst = InputOneDouble * InputTwoDouble; }
+                if (InputOperator == "/") { OutputDoubleFirst = InputOneDouble / InputTwoDouble; }
 
-
-                }
                 OutputStringDoubleFirst = OutputDoubleFirst.ToString();
                 OutputStringFirst = OutputFirst.ToString();
-                Console.WriteLine("Your first outputStringDouble is: " + OutputStringDoubleFirst);
-                Console.WriteLine("Your first outputString is: " + OutputStringFirst);
+                Console.WriteLine("Your output is: " + OutputStringDoubleFirst);
+
 
             }
             //System.Environment.Exit(1);
