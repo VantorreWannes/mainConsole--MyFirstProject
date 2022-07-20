@@ -1,10 +1,14 @@
 ﻿using System;
 using System.IO;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 namespace ManyProjects
 {
     class Program
     {
-        static void Main(string[] args)
+       public static void Main(string[] args)
         {
 
             Console.WriteLine("MAIN MENU!\n");
@@ -50,9 +54,23 @@ namespace ManyProjects
                         break;
 
                     case ConsoleKey.NumPad5:
-                        var CalculatorHelper = new CalculatorHelper();
-                        CalculatorHelper.calculatorMain();
-                        //Console.WriteLine("You did it!"); 
+                        string Calculation = "(2+3-1)^2-(4*4)";
+                        string SimpleCalculation = "1+3";
+                        string OrderInput = "(2+3-1)^2-(4*4)*(1+3)";
+
+
+                        Console.Write("\n");
+                        foreach (string s in CalculatorHelper.InterpretParentheses(Calculation))
+                        {
+                            Console.WriteLine(s);
+                        }
+                        Console.WriteLine("InterpretParentheses was called");
+                        var ResultSimpleExpression = CalculatorHelper.EvaluateSimpleExpression(SimpleCalculation);
+                        Console.WriteLine(ResultSimpleExpression);
+                        Console.WriteLine("EvaluateSimpleExpression was called");
+                        var ResultOOO = CalculatorMain.OrderOfOperations(OrderInput);
+                        Console.WriteLine("This is ResultOOO: {0} ",ResultOOO);
+                        Console.WriteLine("OrderOfOperations was called");
                         break;
 
 
