@@ -4,7 +4,7 @@ namespace ManyProjects
 {
     public static class CalculatorHelper
     {
-        const string SIMPLE_EXPRESSION_REGEX = "^[0-9\\.]{1,50}[+\\-^*/]{1}[0-9\\.]{1,50}$";
+        const string SIMPLE_EXPRESSION_REGEX = "^[0-9]{1,50}[\\.]{0,1}[0-9]{0,50}[+\\-^*/]{1}[0-9]{1,50}[\\.]{0,1}[0-9]{0,50}$";
         static CalculatorHelper()
         {
 
