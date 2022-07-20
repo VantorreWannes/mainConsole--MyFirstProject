@@ -4,7 +4,7 @@ namespace ManyProjects
 {
     public static class CalculatorHelper
     {
-        const string SIMPLE_EXPRESSION_REGEX = "^[0-9]{1,50}[+-^*/]{1}[0-9]{50}$";
+        const string SIMPLE_EXPRESSION_REGEX = "^[0-9\\.]{1,50}[+\\-^*/]{1}[0-9\\.]{1,50}$";
         static CalculatorHelper()
         {
 
@@ -171,12 +171,15 @@ namespace ManyProjects
             return float.MinValue;//If the function is used correctly, this statement should never occur.
 
         }
-
-
+        /// <summary>
+        /// Determines if a given string Expression is "Simple" or not.
+        /// </summary>
+        /// <param name="Expression".</param> Any string expression.
+        /// <returns> true if the expression is simple. </returns>
         public static bool IsSimple(string Expression)
         {
             Regex Tester = new Regex(SIMPLE_EXPRESSION_REGEX);
-            return false;
+            return Tester.IsMatch(Expression);
         }
     }
 }

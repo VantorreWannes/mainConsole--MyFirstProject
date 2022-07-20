@@ -8,19 +8,24 @@
     "net6.0": []
   },
   "packageFolders": {
-    "C:\\Users\\Wannes\\.nuget\\packages\\": {}
+    "C:\\Users\\andre\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Wannes\\Source\\Repos\\mainConsole\\TestProjects\\TestProjects\\TestProjects.csproj",
+      "projectUniqueName": "C:\\Users\\andre\\Source\\Repos\\mainConsole\\TestProjects\\TestProjects\\TestProjects.csproj",
       "projectName": "TestProjects",
-      "projectPath": "C:\\Users\\Wannes\\Source\\Repos\\mainConsole\\TestProjects\\TestProjects\\TestProjects.csproj",
-      "packagesPath": "C:\\Users\\Wannes\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Wannes\\Source\\Repos\\mainConsole\\TestProjects\\TestProjects\\obj\\",
+      "projectPath": "C:\\Users\\andre\\Source\\Repos\\mainConsole\\TestProjects\\TestProjects\\TestProjects.csproj",
+      "packagesPath": "C:\\Users\\andre\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\andre\\Source\\Repos\\mainConsole\\TestProjects\\TestProjects\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+      ],
       "configFilePaths": [
-        "C:\\Users\\Wannes\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\andre\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
