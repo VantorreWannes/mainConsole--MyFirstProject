@@ -18,7 +18,6 @@ namespace ManyProjects
             Console.WriteLine("Please write 4 for a calculator.\n");
             Console.WriteLine("Press Q to stop");
             
-
             ConsoleKeyInfo input;
             do
             {
