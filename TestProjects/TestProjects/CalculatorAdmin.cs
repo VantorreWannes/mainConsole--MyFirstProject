@@ -13,7 +13,7 @@ namespace ManyProjects
             int Counter = 0;
             long Output = 0;
             string OutputStringFirst = "";
-            long NumberOfCalculations;
+            long NumberOfCalculations;
             string InputThreeString;
             long InputOne;
             long InputTwo;

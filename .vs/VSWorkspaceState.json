@@ -1,7 +1,9 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\TestProjects",
+    "\\TestProjects\\TestProjects"
   ],
-  "SelectedNode": "\\C:\\Users\\andre\\Source\\Repos\\mainConsole",
+  "SelectedNode": "\\TestProjects\\TestProjects\\CalculatorAdmin.cs",
   "PreviewInSolutionExplorer": false
 }

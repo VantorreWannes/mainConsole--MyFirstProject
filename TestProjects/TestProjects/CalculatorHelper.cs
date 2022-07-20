@@ -49,7 +49,7 @@ namespace ManyProjects
             string[] Operators = { "+", "-", "*", "/", "^" };
             int index = 0;
 
-            while((OperatorLocation == 0) && index<Operators.Length)
+            while((OperatorLocation == 0) && (index<Operators.Length))
             {
                 if (Expression.IndexOf(Operators[index]) == -1)
                 index++;
