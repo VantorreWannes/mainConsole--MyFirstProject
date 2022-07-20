@@ -1,7 +1,10 @@
-﻿namespace ManyProjects
+﻿using System.Text.RegularExpressions;
+
+namespace ManyProjects
 {
     public static class CalculatorHelper
     {
+        const string SIMPLE_EXPRESSION_REGEX = "^[0-9]{1,50}[+-^*/]{1}[0-9]{50}$";
         static CalculatorHelper()
         {
 
@@ -170,9 +173,9 @@
         }
 
 
-        public static bool TestForSimple(string Expression)
+        public static bool IsSimple(string Expression)
         {
-
+            Regex Tester = new Regex(SIMPLE_EXPRESSION_REGEX);
             return false;
         }
     }
