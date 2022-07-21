@@ -55,7 +55,7 @@ namespace ManyProjects
                     case ConsoleKey.NumPad5:
                         string Calculation = "(2+3-1)^2-(4*4)";
                         string SimpleCalculation = "1+3";
-                        string OrderInput = "(2+3-1)^2-(4*4)*(1+3)";
+                        string OrderInput = "(222+333-1)^2-(4*4)*(1+3)";
 
 
                         Console.Write("\n");

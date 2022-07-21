@@ -40,8 +40,8 @@ namespace ManyProjects
         //takes inputs and assigns hierarchy value based on brackets
         public static List<string> InterpretDoThisFirst(string Expression)
         {
-
-
+            List<string> SubExpressions = new List<string>();
+            /*
             bool ContainsParentheses = false;
             bool ContainsExponents = false;
             bool ContainsMultiplications = false;
@@ -99,27 +99,80 @@ namespace ManyProjects
                 else
                 { return false; }
 
-            }
-            
+            }*/
+
             return SubExpressions;
 
         }
 
         //will add summary later
         //just splits on the operators and puts into list
-        public static List<string> InterpretOperators(string Expression)
+        public static string InterpretOperators(string Expression)
         {
-            List<string> SubExpressions = new List<string>();
-            string Temp = string.Concat(Expression.Where(c => !char.IsWhiteSpace(c)));
-            Temp = Temp.Replace("+", "R+R").Replace("-", "R-R").Replace("*", "R*R").Replace("/", "R/R");
-            string[] TempArray1 = Temp.Split("R");
+            float NumberLeft = 0;
+            string NumberLeftString = "";
+            float NumberRight = 0;
+            string NumberRightString = "";
+            bool DidOnce = false;
+            char Zero = '0';
+            int PosInverted = 1;
+            int NumberRnExqualsTempString = 1;
+            string CharacterNowReplaced = "";
+            string[] OperatorNeeded = { "+", "-", "*", "/", "(", ")" };
+            string SplitString = "";
+            string CharacterNow = "";
+            string TempString = "";
+            string NumberRn = "";
+            int PosRn = 0; 
 
-            for (int j = 0; j < TempArray1.Length; j++)
+            //List<string> SubExpressions = new List<string>();
+            string Temp = string.Concat(Expression.Where(c => !char.IsWhiteSpace(c)));
+            char[] TempCharArray = Temp.ToCharArray();
+            int PositionOfoperator = Array.IndexOf(TempCharArray, '-');
+
+            int Pos = PositionOfoperator;
+            int ConstPos = PositionOfoperator;
+            Pos--;
+            Console.WriteLine("Pos is: {0}", Pos);
+
+            while (Pos != -1)
             {
-                SubExpressions.Add(TempArray1[j]);
+                CharacterNow = TempCharArray[Pos].ToString();
+                Console.WriteLine(Pos);
+                TempString = TempCharArray[Pos].ToString();
+                NumberRn = TempCharArray[Pos].ToString();
+
+
+                if (TempString.Equals("+") || TempString.Equals("-") || TempString.Equals("*") || TempString.Equals("/") || TempString.Equals("(") || TempString.Equals(")"))
+                {
+                    CharacterNowReplaced = CharacterNow.Replace("+", "+R").Replace("-", "-R").Replace("*", "*R").Replace("/", "/R").Replace("(", "(R").Replace(")", ")R");
+                    PosRn = Pos;
+                    Console.WriteLine("operator Hit: {0}", CharacterNow);
+
+                    break;
+                }
+
+
+                PosInverted++;
+                DidOnce = true;
+                Pos--;
+            }
+            Pos = PositionOfoperator;
+            while (NumberRn.Equals(TempString))
+            {
+                    
+                    NumberRn = TempCharArray[Pos].ToString();
+                    NumberLeftString = TempCharArray[Pos].ToString();
+                    //if (DidOnce = true) { NumberLeftString = NumberLeftString + "0"; }
+                    if (DidOnce = true) { NumberLeftString = NumberLeftString.PadRight(PosInverted, Zero); }
+                    Console.WriteLine("NumberLeftString is: {0}", NumberLeftString);
+                    NumberRn = TempCharArray[Pos].ToString();
+                    Pos--;
             }
 
-            return SubExpressions;
+            string PositionOfOperatorString = PositionOfoperator.ToString();
+
+            return PositionOfOperatorString;
         }
 
         /// <summary>

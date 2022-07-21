@@ -30,15 +30,17 @@ namespace ManyProjects
 
             for (int s = 0; s < InputParenthesesList.Count; s++)
             {
-                Console.WriteLine(InterpretDoThisFirstList[CounterDoThisFirst]);
+                //Console.WriteLine(InterpretDoThisFirstList[CounterDoThisFirst]);
                 CounterDoThisFirst++;
             }
 
+
+
             Console.WriteLine("Interpretoperators:");
             //splits Our input on the +, -, * and / with the help of InterpretOperators().
-            List<string> InterpretOperatorsList = new List<string>();
-            InterpretOperatorsList = CalculatorHelper.InterpretOperators(Expression);
-
+            
+            string InterpretOperatorsList = CalculatorHelper.InterpretOperators(Expression);
+            Console.WriteLine(InterpretOperatorsList);
 
 
             return Expression;
