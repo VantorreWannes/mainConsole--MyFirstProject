@@ -4,7 +4,7 @@ namespace ManyProjects
 {
     public static class CalculatorHelper
     {
-        const string SIMPLE_EXPRESSION_REGEX = "^[0-9\\.]{1,50}[+\\-^*/]{1}[0-9\\.]{1,50}$";
+        const string SIMPLE_EXPRESSION_REGEX = "^[0-9]{1,50}[\\.]{0,1}[0-9]{0,50}[+\\-^*/]{1}[0-9]{1,50}[\\.]{0,1}[0-9]{0,50}$";
         static CalculatorHelper()
         {
 
@@ -234,5 +234,41 @@ namespace ManyProjects
             Regex Tester = new Regex(SIMPLE_EXPRESSION_REGEX);
             return Tester.IsMatch(Expression);
         }
+
+
+        /// <summary>
+        /// (BROKEN) Evaluates a "layered expression". A "layered" expresssion consists of a string of mathematical operations with only 1 operation type such as 5*5*5*5.
+        /// </summary>
+        /// <param name="Expression"></param> A string expression with one operation type.
+        /// <returns></returns> returns the value of the float
+        public static float EvaluateLayeredExpression(string Expression)
+        {
+            string temp = "";
+            string simplePart = "";
+
+            int operatorIndex = 0;
+            string[] operators = { "+", "-", "*", "/", "^" };
+            for(int i = 0; i<operators.Length;i++)//determine which operator the Layered Expression uses.
+            {
+                if (Expression.Contains(operators[i]))
+                {
+                    operatorIndex = i;
+                    break;
+                }
+            }
+
+            while (Expression.Contains(operators[operatorIndex]) && !(IsSimple(Expression)))//loop until reduced to a simple expression.
+            {
+                temp = Expression.Substring(0, Expression.IndexOf(operators[operatorIndex])+1);
+                Expression = Expression.Remove(0, temp.Length);
+                simplePart = String.Concat(temp, Expression.Substring(0, Expression.IndexOf(operators[operatorIndex])));
+                Expression = Expression.Remove(0, Expression.IndexOf(operators[operatorIndex]));
+                temp = EvaluateSimpleExpression(simplePart).ToString();
+                Expression = String.Concat(temp, Expression);
+            }
+
+            return EvaluateSimpleExpression(Expression);
+        }
+        
     }
 }
