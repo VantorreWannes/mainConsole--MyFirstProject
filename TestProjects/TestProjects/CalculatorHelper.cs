@@ -158,7 +158,7 @@ namespace ManyProjects
 
         }
         //Goes to left untill it hits an operator then saves and sends as variable 
-        public static string NumberToLeft(string PositionOperatorStringLeft, string Expression, string StartPosSLeft)
+        public static string NumberToLeft(string Expression, string StartPosSLeft)
         {
 
             int Counter = 0;
@@ -170,7 +170,6 @@ namespace ManyProjects
             string NumberLeftString = "";
             bool IsEqualToTokens = true;
             int StartPos = int.Parse(StartPosSLeft);
-            string InputOperators = PositionOperatorStringLeft;
             List<string> OperatorList = new List<string>();
             var Characters = new List<float>();
             string ExpressionInput = Expression;
@@ -218,7 +217,7 @@ namespace ManyProjects
             }
             LoopMethod();
             Characters.Reverse();
-            NumberLeft = float.Parse(String.Join("", Characters));
+            NumberLeft = int.Parse(String.Join("", Characters));
             NumberLeftString = NumberLeft.ToString();
             return NumberLeftString;
         }
@@ -237,6 +236,7 @@ namespace ManyProjects
             bool IsEqualToTokens = true;
             int StartPos = int.Parse(StartPosSRight);
             string InputOperators = PositionOperatorStringRight;
+            Console.WriteLine("InputOperators: " + InputOperators);
             List<string> OperatorList = new List<string>();
             var Characters = new List<float>();
             string ExpressionInput = Expression;
@@ -284,7 +284,7 @@ namespace ManyProjects
                 }
             }
             LoopMethod();
-            NumberRight = float.Parse(String.Join("", Characters));
+            NumberRight = int.Parse(String.Join("", Characters));
             NumberRightString = NumberRight.ToString();
             return NumberRightString;
         }
