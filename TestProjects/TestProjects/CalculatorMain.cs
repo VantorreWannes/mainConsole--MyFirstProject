@@ -25,7 +25,7 @@ namespace ManyProjects
             Console.WriteLine("\nPositionStartPos:\n");
             int StartPosLeft = 0;
             int StartPosRight = 0;
-            string PositionoperatorString = CalculatorHelper.PositionStartPos(Expression, ref StartPosLeft, ref StartPosRight);
+            string PositionoperatorString = CalculatorHelper.GetOperatorLocation(Expression, ref StartPosLeft, ref StartPosRight);
             Console.WriteLine("This is PositionStartPos: " + PositionoperatorString);
 
             //Goes to the left untill it hits an operator then saves and sends as a variable.
