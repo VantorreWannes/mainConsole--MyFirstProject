@@ -36,91 +36,6 @@ namespace ManyProjects
             return SubExpressions;
         }
 
-        //will add summary later
-        //takes inputs and assigns hierarchy value based on brackets
-        public static List<string> InterpretDoThisFirst(string Expression)
-        {
-
-
-            bool ContainsParentheses = false;
-            bool ContainsExponents = false;
-            bool ContainsMultiplications = false;
-            bool ContainsAddition = false;
-            bool ContainsSubtraction = false;
-            bool ContainsSomething = false;
-            int s = 0;
-
-            Console.WriteLine("Expression: {0}", Expression);
-            List<string> SubExpressions = new List<string>();
-            
-
-            SubExpressions = CalculatorHelper.InterpretParentheses(Expression);
-            int i = SubExpressions.Count;
-            int p = SubExpressions.Count;
-            Console.WriteLine(i);
-            
-            while(s <  i)
-            {
-                ContainsParentheses = SubExpressions[s].Contains("(") || SubExpressions[s].Contains(")");
-                if (ContainsParentheses)
-                { SubExpressions.Insert(s, "M1M" + s + "M"); }
-                else { ContainsSomething = true; };
-
-                Console.WriteLine("SubExpressions: {0}", SubExpressions[s]);
-
-                ContainsExponents = SubExpressions[s].Contains("^");
-                if (ContainsParentheses)
-                { SubExpressions.Insert(s,"M2M" + s + "M"); }
-                else { ContainsSomething = true; };
-
-                ContainsMultiplications = SubExpressions[s].Contains("*") || SubExpressions[s].Contains("/");
-                if (ContainsParentheses)
-                { SubExpressions.Insert(s, "M3M" + s + "M"); }
-                else { ContainsSomething = true; };
-
-                ContainsAddition = SubExpressions[s].Contains("+");
-                if (ContainsParentheses)
-                { SubExpressions.Insert(s, "M4M" + s + "M"); }
-                else { ContainsSomething = true; };
-
-                ContainsSubtraction = SubExpressions[s].Contains("-");
-                if (ContainsParentheses)
-                { SubExpressions.Insert(s, "M5M" + s + "M"); }
-                else { ContainsSomething = true; };
-                if( s == p)
-                {
-                    break;
-                } 
-            }
-            bool ContainsClass(bool Contains)
-            {
-                if (ContainsSomething)
-                { return true; }
-                else
-                { return false; }
-
-            }
-            
-            return SubExpressions;
-
-        }
-
-        //will add summary later
-        //just splits on the operators and puts into list
-        public static List<string> InterpretOperators(string Expression)
-        {
-            List<string> SubExpressions = new List<string>();
-            string Temp = string.Concat(Expression.Where(c => !char.IsWhiteSpace(c)));
-            Temp = Temp.Replace("+", "R+R").Replace("-", "R-R").Replace("*", "R*R").Replace("/", "R/R");
-            string[] TempArray1 = Temp.Split("R");
-
-            for (int j = 0; j < TempArray1.Length; j++)
-            {
-                SubExpressions.Add(TempArray1[j]);
-            }
-
-            return SubExpressions;
-        }
 
         /// <summary>
         /// Evaluates a "simple expression" with the +,-,*,/,^ operations. If the calculation goes wrong, the function will return int.MinValue.
@@ -171,6 +86,210 @@ namespace ManyProjects
             return float.MinValue;//If the function is used correctly, this statement should never occur.
 
         }
+        //saves the position of operators in a string
+        public static string PositionStartPos(string Expression, ref int StartPosLeft, ref int StartPosRight)
+        {
+            Console.WriteLine("Ran PositionStartPos");
+
+            int CheckOperators( ref int StartPosLeft, ref int StartPosRight)
+            {
+                int IgnoreOutput = 0;
+                for (int i = 0; i != Expression.Length; i++)
+                {
+                    Console.WriteLine(Expression[i]);
+
+                    if (Expression[i].Equals("¨"))
+                    {
+                        StartPosLeft = i--;
+                        StartPosRight = i++;
+                        Console.WriteLine("StartPosLeft: " + StartPosLeft);
+                        Console.WriteLine("StartPosRight: " + StartPosRight);
+                        return IgnoreOutput;
+                    }
+                    else if (Expression[i].Equals("*"))
+                    {
+                        StartPosLeft = i--;
+                        StartPosRight = i++;
+                        Console.WriteLine("StartPosLeft: " + StartPosLeft);
+                        Console.WriteLine("StartPosRight: " + StartPosRight);
+                        return IgnoreOutput;
+                    }
+                    else if (Expression[i].Equals("/"))
+                    {
+                        StartPosLeft = i--;
+                        StartPosRight = i++;
+                        Console.WriteLine("StartPosLeft: " + StartPosLeft);
+                        Console.WriteLine("StartPosRight: " + StartPosRight);
+                        return IgnoreOutput;
+                    }
+                    else if (Expression[i].Equals("+"))
+                    {
+                        StartPosLeft = i--;
+                        StartPosRight = i++;
+                        Console.WriteLine("StartPosLeft: " + StartPosLeft);
+                        Console.WriteLine("StartPosRight: " + StartPosRight);
+                        return IgnoreOutput;
+                    }
+                    else if (Expression[i].Equals("-"))
+                    {
+                        StartPosLeft = i--;
+                        StartPosRight = i++;
+                        Console.WriteLine("StartPosLeft: " + StartPosLeft);
+                        Console.WriteLine("StartPosRight: " + StartPosRight);
+                        return IgnoreOutput;
+                    }
+                    else
+                    {
+                        Console.WriteLine("Invalid input. Missing operators.");
+                        return IgnoreOutput;
+                    }
+                }
+                return IgnoreOutput;
+
+            }
+
+            
+            CheckOperators(ref StartPosLeft, ref StartPosRight);
+
+
+            string output = "";
+
+            return output;
+
+        }
+        //Goes to left untill it hits an operator then saves and sends as variable 
+        public static string NumberToLeft(string PositionOperatorStringLeft, string Expression, string StartPosSLeft)
+        {
+
+            int Counter = 0;
+            int CounterMinusTwo = 0;
+            int CounterMinus = 0;
+            float CharacterRnFloat = 0;
+            string CharacterRnS = "";
+            float NumberLeft = 0;
+            string NumberLeftString = "";
+            bool IsEqualToTokens = true;
+            int StartPos = int.Parse(StartPosSLeft);
+            string InputOperators = PositionOperatorStringLeft;
+            List<string> OperatorList = new List<string>();
+            var Characters = new List<float>();
+            string ExpressionInput = Expression;
+            int ExpressionLength = Expression.Length;
+            char[] IndexCounter = new char[ExpressionLength];
+            char[] ExpressionCharArray = new char[Expression.Length];
+            ExpressionCharArray = Expression.ToCharArray();
+
+            for (int i = 0; i < Expression.Length; i++)
+            {
+                OperatorList.Add(Expression[i].ToString());
+            }
+            void LoopMethod()
+            {
+                foreach (string IndexStuff in OperatorList)
+                {
+                    if (Counter.Equals(ExpressionLength)) { Console.WriteLine("Loop ended"); return; }
+                    if (Counter.Equals(StartPos))
+                    {
+                        if (Counter.Equals(ExpressionLength)) { return; }
+                        if (Counter.Equals(StartPos))
+                        {
+                            CounterMinusTwo = Counter;
+                            int CounterMinusOne = CounterMinusTwo--;
+                            CharacterRnS = ExpressionInput[Counter].ToString();
+                            CounterMinusTwo = Counter;
+                            IsEqualToTokens = true;
+                            CharacterRnS = ExpressionInput[CounterMinusTwo].ToString();
+                            while (IsEqualToTokens)
+                            {
+                                CharacterRnS = ExpressionInput[CounterMinusTwo].ToString();
+                                if ((CharacterRnS.Equals(")")) || (CharacterRnS.Equals("(")) || (CharacterRnS.Equals("+")) || (CharacterRnS.Equals("-")) || (CharacterRnS.Equals("*")) || (CharacterRnS.Equals("/")) || (CharacterRnS.Equals("^"))) { Console.WriteLine("Token hit!"); IsEqualToTokens = false; return; }
+                                string CharacterRn = ExpressionInput[CounterMinusTwo].ToString();
+                                CharacterRnFloat = float.Parse(CharacterRn);
+                                Characters.Add(CharacterRnFloat);
+
+                                CounterMinusTwo--;
+                            }
+                            CounterMinus--;
+
+                        }
+                    }
+                    Counter++;
+                }
+            }
+            LoopMethod();
+            Characters.Reverse();
+            NumberLeft = float.Parse(String.Join("", Characters));
+            NumberLeftString = NumberLeft.ToString();
+            return NumberLeftString;
+        }
+
+        //takes IndexList and checks for a special character being hit and combines all the untill that operator was hit.
+        public static string NumberToRight(string PositionOperatorStringRight, string Expression, string StartPosSRight)
+        {
+
+            int Counter = 0;
+            int CounterPlus = 0;
+            int CounterMinus = 0;
+            float CharacterRnFloat = 0;
+            string CharacterRnS = "";
+            float NumberRight = 0;
+            string NumberRightString = "";
+            bool IsEqualToTokens = true;
+            int StartPos = int.Parse(StartPosSRight);
+            string InputOperators = PositionOperatorStringRight;
+            List<string> OperatorList = new List<string>();
+            var Characters = new List<float>();
+            string ExpressionInput = Expression;
+            int ExpressionLength = Expression.Length;
+            Console.WriteLine(ExpressionLength);
+            char[] IndexCounter = new char[ExpressionLength];
+            char[] ExpressionCharArray = new char[Expression.Length];
+            ExpressionCharArray = Expression.ToCharArray();
+
+            for (int i = 0; i < Expression.Length; i++)
+            {
+                OperatorList.Add(Expression[i].ToString());
+            }
+
+            void LoopMethod()
+            {
+
+                foreach (string IndexStuff in OperatorList)
+                {
+                    if (Counter.Equals(ExpressionLength)) { return; }
+                    if (Counter.Equals(ExpressionLength)) { return; }
+                    if (Counter.Equals(StartPos))
+                    {
+                        //int CounterMinusOne = Counter--;
+                        CounterPlus = Counter;
+                        CharacterRnS = ExpressionInput[CounterPlus].ToString();
+                        IsEqualToTokens = true;
+                        CharacterRnS = ExpressionInput[CounterPlus].ToString();
+                        Console.WriteLine("CharacterRnS: "+CharacterRnS);
+                        while (IsEqualToTokens)
+                        {
+                            if (CounterPlus.Equals(ExpressionLength)) { IsEqualToTokens = false; return; Console.WriteLine("Limit exceeded");}
+                            CharacterRnS = ExpressionInput[CounterPlus].ToString();
+                            if ((CharacterRnS.Equals(")")) || (CharacterRnS.Equals("(")) || (CharacterRnS.Equals("+")) || (CharacterRnS.Equals("-")) || (CharacterRnS.Equals("*")) || (CharacterRnS.Equals("/")) || (CharacterRnS.Equals("^"))) { Console.WriteLine("Token hit!"); IsEqualToTokens = false; return; }
+                            Console.WriteLine("CharacterRnS: " + CharacterRnS);
+                            string CharacterRn = ExpressionInput[CounterPlus].ToString();
+                            CharacterRnFloat = float.Parse(CharacterRn);
+                            Characters.Add(CharacterRnFloat);
+                            CounterPlus++;
+
+                        }
+                        CounterMinus--;
+                    }
+                    Counter++;
+                }
+            }
+            LoopMethod();
+            NumberRight = float.Parse(String.Join("", Characters));
+            NumberRightString = NumberRight.ToString();
+            return NumberRightString;
+        }
+
+
         /// <summary>
         /// Determines if a given string Expression is "Simple" or not.
         /// </summary>
@@ -190,12 +309,13 @@ namespace ManyProjects
         /// <returns></returns> returns the value of the float
         public static float EvaluateLayeredExpression(string Expression)
         {
+
             string temp = "";
             string simplePart = "";
 
             int operatorIndex = 0;
             string[] operators = { "+", "-", "*", "/", "^" };
-            for(int i = 0; i<operators.Length;i++)//determine which operator the Layered Expression uses.
+            for (int i = 0; i < operators.Length; i++)//determine which operator the Layered Expression uses.
             {
                 if (Expression.Contains(operators[i]))
                 {
@@ -206,7 +326,7 @@ namespace ManyProjects
 
             while (Expression.Contains(operators[operatorIndex]) && !(IsSimple(Expression)))//loop until reduced to a simple expression.
             {
-                temp = Expression.Substring(0, Expression.IndexOf(operators[operatorIndex])+1);
+                temp = Expression.Substring(0, Expression.IndexOf(operators[operatorIndex]) + 1);
                 Expression = Expression.Remove(0, temp.Length);
                 simplePart = String.Concat(temp, Expression.Substring(0, Expression.IndexOf(operators[operatorIndex])));
                 Expression = Expression.Remove(0, Expression.IndexOf(operators[operatorIndex]));
@@ -216,6 +336,6 @@ namespace ManyProjects
 
             return EvaluateSimpleExpression(Expression);
         }
-        
+
     }
 }

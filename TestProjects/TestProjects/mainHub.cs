@@ -55,9 +55,12 @@ namespace ManyProjects
                     case ConsoleKey.NumPad5:
                         string Calculation = "(2+3-1)^2-(4*4)";
                         string SimpleCalculation = "1+3";
-                        string OrderInput = "(2+3-1)^2-(4*4)*(1+3)";
-
-
+                        string OrderInput = "(123¨2)-689*567";
+                        Console.WriteLine("\n");
+                        for (int i =0;i!= OrderInput.Length; i++)
+                        {
+                            Console.WriteLine(OrderInput[i]+"{"+i+"}");
+                        }
                         Console.Write("\n");
                         foreach (string s in CalculatorHelper.InterpretParentheses(Calculation))
                         {
@@ -67,8 +70,8 @@ namespace ManyProjects
                         var ResultSimpleExpression = CalculatorHelper.EvaluateSimpleExpression(SimpleCalculation);
                         Console.WriteLine(ResultSimpleExpression);
                         Console.WriteLine("EvaluateSimpleExpression was called");
-                        var ResultOOO = CalculatorMain.OrderOfOperations(OrderInput);
-                        Console.WriteLine("This is ResultOOO: {0} ",ResultOOO);
+                        var Result = CalculatorMain.OrderOfOperations(OrderInput);
+                        Console.WriteLine("\nThis is Result: {0} ", Result);
                         Console.WriteLine("OrderOfOperations was called");
                         break;
 

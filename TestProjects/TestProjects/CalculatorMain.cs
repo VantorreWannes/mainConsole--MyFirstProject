@@ -2,12 +2,10 @@ namespace ManyProjects
 {
     public static class CalculatorMain
     {
-        public static string OrderOfOperations(String Expression)
+        public static string OrderOfOperations(string Expression)
         {
 
             int CounterParentheses = 0;
-            int CounterDoThisFirst = 0;
-            int CounterOperators = 0;
 
             Console.WriteLine("This is the OrderExpression input: " + Expression);
 
@@ -23,25 +21,32 @@ namespace ManyProjects
                 Console.WriteLine(InputParenthesesList[CounterParentheses]);
                 CounterParentheses++;
             }
+            //saves the position of operators in a string
+            Console.WriteLine("\nPositionStartPos:\n");
+            int StartPosLeft = 0;
+            int StartPosRight = 0;
+            string PositionoperatorString = CalculatorHelper.PositionStartPos(Expression, ref StartPosLeft, ref StartPosRight);
+            Console.WriteLine("This is PositionStartPos: " + PositionoperatorString);
 
-            Console.WriteLine("InterpretDoThisFirst:");
-            List<string> InterpretDoThisFirstList = new List<string>();
-            InterpretDoThisFirstList = CalculatorHelper.InterpretDoThisFirst(Expression);
+            //Goes to the left untill it hits an operator then saves and sends as a variable.
+            Console.WriteLine("\nNumber to Side:\n");
+            string StartPosSLeft = "10";
+            string NumberLeft = CalculatorHelper.NumberToLeft(PositionoperatorString, Expression, StartPosSLeft);
+            Console.WriteLine("Number Left: " + NumberLeft+"\n");
 
-            for (int s = 0; s < InputParenthesesList.Count; s++)
-            {
-                Console.WriteLine(InterpretDoThisFirstList[CounterDoThisFirst]);
-                CounterDoThisFirst++;
-            }
+            //Goes to the side untill it hits an operator then saves and sends as a variable.
+            string StartPosSRight = "12";
+            string NumberRight = CalculatorHelper.NumberToRight(PositionoperatorString, Expression, StartPosSRight);
+            Console.WriteLine("Number Right: " + NumberRight);
 
-            Console.WriteLine("Interpretoperators:");
-            //splits Our input on the +, -, * and / with the help of InterpretOperators().
-            List<string> InterpretOperatorsList = new List<string>();
-            InterpretOperatorsList = CalculatorHelper.InterpretOperators(Expression);
-
-
-
+            /*
+            Console.WriteLine("EvaluateLayeredExpression:");
+            string SimpleCalculation = "1+3";
+            float EvaluateLayeredExpressionFloat = CalculatorHelper.EvaluateLayeredExpression(SimpleCalculation);
+            Console.WriteLine(EvaluateLayeredExpressionFloat);
+            */
             return Expression;
+           
         }
     }
 }
