@@ -4,7 +4,7 @@ namespace ManyProjects
 {
     public static class CalculatorHelper
     {
-        const string SIMPLE_EXPRESSION_REGEX = "^[0-9]{1,50}[\\.]{0,1}[0-9]{0,50}[+\\-^*/]{1}[0-9]{1,50}[\\.]{0,1}[0-9]{0,50}$";
+        const string SIMPLE_EXPRESSION_REGEX = "^[0-9]{1,50}[\\.,]{0,1}[0-9]{0,50}[+\\-^*/]{1}[0-9]{1,50}[\\.,]{0,1}[0-9]{0,50}$";
         static CalculatorHelper()
         {
 
@@ -82,177 +82,8 @@ namespace ManyProjects
             {
                 return (float)Math.Pow(Value1, Value2);
             }
-
             return float.MinValue;//If the function is used correctly, this statement should never occur.
-
         }
-        
-        
-        /// <summary>
-        /// Returns the first occurance of an operator within a given expression.
-        /// </summary>
-        /// <param name="Expression"></param>
-        /// <returns></returns>
-        public static int GetOperatorLocation(string Expression)
-        {
-            for (int i = 0; i < Expression.Length; i++)
-            {
-                if (Expression[i].Equals("¨"))
-                {
-                    return i;
-                }
-                else if (Expression[i].Equals("*"))
-                {
-                    return i;
-                }
-                else if (Expression[i].Equals("/"))
-                {
-                    return i;
-                }
-                else if (Expression[i].Equals("+"))
-                {
-                    return i;
-                }
-                else if (Expression[i].Equals("-"))
-                {
-                    return i;
-                }
-            }
-            return -1;
-        }
-
-        //Goes to left untill it hits an operator then saves and sends as variable 
-        public static string NumberToLeft(string Expression, string StartPosSLeft)
-        {
-
-            int Counter = 0;
-            int CounterMinusTwo = 0;
-            int CounterMinus = 0;
-            float CharacterRnFloat = 0;
-            string CharacterRnS = "";
-            float NumberLeft = 0;
-            string NumberLeftString = "";
-            bool IsEqualToTokens = true;
-            int StartPos = int.Parse(StartPosSLeft);
-            List<string> OperatorList = new List<string>();
-            var Characters = new List<float>();
-            string ExpressionInput = Expression;
-            int ExpressionLength = Expression.Length;
-            char[] IndexCounter = new char[ExpressionLength];
-            char[] ExpressionCharArray = new char[Expression.Length];
-            ExpressionCharArray = Expression.ToCharArray();
-
-            for (int i = 0; i < Expression.Length; i++)
-            {
-                OperatorList.Add(Expression[i].ToString());
-            }
-            void LoopMethod()
-            {
-                foreach (string IndexStuff in OperatorList)
-                {
-                    if (Counter.Equals(ExpressionLength)) { Console.WriteLine("Loop ended"); return; }
-                    if (Counter.Equals(StartPos))
-                    {
-                        if (Counter.Equals(ExpressionLength)) { return; }
-                        if (Counter.Equals(StartPos))
-                        {
-                            CounterMinusTwo = Counter;
-                            int CounterMinusOne = CounterMinusTwo--;
-                            CharacterRnS = ExpressionInput[Counter].ToString();
-                            CounterMinusTwo = Counter;
-                            IsEqualToTokens = true;
-                            CharacterRnS = ExpressionInput[CounterMinusTwo].ToString();
-                            while (IsEqualToTokens)
-                            {
-                                CharacterRnS = ExpressionInput[CounterMinusTwo].ToString();
-                                if ((CharacterRnS.Equals(")")) || (CharacterRnS.Equals("(")) || (CharacterRnS.Equals("+")) || (CharacterRnS.Equals("-")) || (CharacterRnS.Equals("*")) || (CharacterRnS.Equals("/")) || (CharacterRnS.Equals("^"))) { Console.WriteLine("Token hit!"); IsEqualToTokens = false; return; }
-                                string CharacterRn = ExpressionInput[CounterMinusTwo].ToString();
-                                CharacterRnFloat = float.Parse(CharacterRn);
-                                Characters.Add(CharacterRnFloat);
-
-                                CounterMinusTwo--;
-                            }
-                            CounterMinus--;
-
-                        }
-                    }
-                    Counter++;
-                }
-            }
-            LoopMethod();
-            Characters.Reverse();
-            NumberLeft = int.Parse(String.Join("", Characters));
-            NumberLeftString = NumberLeft.ToString();
-            return NumberLeftString;
-        }
-
-        //takes IndexList and checks for a special character being hit and combines all the untill that operator was hit.
-        public static string NumberToRight(string PositionOperatorStringRight, string Expression, string StartPosSRight)
-        {
-
-            int Counter = 0;
-            int CounterPlus = 0;
-            int CounterMinus = 0;
-            float CharacterRnFloat = 0;
-            string CharacterRnS = "";
-            float NumberRight = 0;
-            string NumberRightString = "";
-            bool IsEqualToTokens = true;
-            int StartPos = int.Parse(StartPosSRight);
-            string InputOperators = PositionOperatorStringRight;
-            Console.WriteLine("InputOperators: " + InputOperators);
-            List<string> OperatorList = new List<string>();
-            var Characters = new List<float>();
-            string ExpressionInput = Expression;
-            int ExpressionLength = Expression.Length;
-            Console.WriteLine(ExpressionLength);
-            char[] IndexCounter = new char[ExpressionLength];
-            char[] ExpressionCharArray = new char[Expression.Length];
-            ExpressionCharArray = Expression.ToCharArray();
-
-            for (int i = 0; i < Expression.Length; i++)
-            {
-                OperatorList.Add(Expression[i].ToString());
-            }
-
-            void LoopMethod()
-            {
-
-                foreach (string IndexStuff in OperatorList)
-                {
-                    if (Counter.Equals(ExpressionLength)) { return; }
-                    if (Counter.Equals(ExpressionLength)) { return; }
-                    if (Counter.Equals(StartPos))
-                    {
-                        //int CounterMinusOne = Counter--;
-                        CounterPlus = Counter;
-                        CharacterRnS = ExpressionInput[CounterPlus].ToString();
-                        IsEqualToTokens = true;
-                        CharacterRnS = ExpressionInput[CounterPlus].ToString();
-                        Console.WriteLine("CharacterRnS: "+CharacterRnS);
-                        while (IsEqualToTokens)
-                        {
-                            if (CounterPlus.Equals(ExpressionLength)) { IsEqualToTokens = false; return; Console.WriteLine("Limit exceeded");}
-                            CharacterRnS = ExpressionInput[CounterPlus].ToString();
-                            if ((CharacterRnS.Equals(")")) || (CharacterRnS.Equals("(")) || (CharacterRnS.Equals("+")) || (CharacterRnS.Equals("-")) || (CharacterRnS.Equals("*")) || (CharacterRnS.Equals("/")) || (CharacterRnS.Equals("^"))) { Console.WriteLine("Token hit!"); IsEqualToTokens = false; return; }
-                            Console.WriteLine("CharacterRnS: " + CharacterRnS);
-                            string CharacterRn = ExpressionInput[CounterPlus].ToString();
-                            CharacterRnFloat = float.Parse(CharacterRn);
-                            Characters.Add(CharacterRnFloat);
-                            CounterPlus++;
-
-                        }
-                        CounterMinus--;
-                    }
-                    Counter++;
-                }
-            }
-            LoopMethod();
-            NumberRight = int.Parse(String.Join("", Characters));
-            NumberRightString = NumberRight.ToString();
-            return NumberRightString;
-        }
-
 
         /// <summary>
         /// Determines if a given string Expression is "Simple" or not.
@@ -264,7 +95,11 @@ namespace ManyProjects
             Regex Tester = new Regex(SIMPLE_EXPRESSION_REGEX);
             return Tester.IsMatch(Expression);
         }
-
+        public static bool IsLayered(string Expression)
+        {
+            Regex Tester = new Regex(SIMPLE_EXPRESSION_REGEX);
+            return Tester.IsMatch(Expression);
+        }
 
         /// <summary>
         /// (BROKEN) Evaluates a "layered expression". A "layered" expresssion consists of a string of mathematical operations with only 1 operation type such as 5*5*5*5.
@@ -290,7 +125,7 @@ namespace ManyProjects
 
             expressionOperator = operators[operatorIndex];
 
-            while (Expression.Contains(expressionOperator) && !(IsSimple(Expression)))//loop until reduced to a simple expression.
+            while !(IsSimple(Expression))//loop until reduced to a simple expression.
             {
                 temp = Expression.Substring(0, Expression.IndexOf(expressionOperator) + 1);
                 Expression = Expression.Remove(0, temp.Length);
