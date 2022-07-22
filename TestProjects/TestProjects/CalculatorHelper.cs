@@ -86,77 +86,41 @@ namespace ManyProjects
             return float.MinValue;//If the function is used correctly, this statement should never occur.
 
         }
-        //saves the position of operators in a string
-        public static string PositionStartPos(string Expression, ref int StartPosLeft, ref int StartPosRight)
+        
+        
+        /// <summary>
+        /// Returns the first occurance of an operator within a given expression.
+        /// </summary>
+        /// <param name="Expression"></param>
+        /// <returns></returns>
+        public static int GetOperatorLocation(string Expression)
         {
-            Console.WriteLine("Ran PositionStartPos");
-
-            int CheckOperators( ref int StartPosLeft, ref int StartPosRight)
+            for (int i = 0; i < Expression.Length; i++)
             {
-                int IgnoreOutput = 0;
-                for (int i = 0; i != Expression.Length; i++)
+                if (Expression[i].Equals("¨"))
                 {
-                    Console.WriteLine(Expression[i]);
-
-                    if (Expression[i].Equals("¨"))
-                    {
-                        StartPosLeft = i--;
-                        StartPosRight = i++;
-                        Console.WriteLine("StartPosLeft: " + StartPosLeft);
-                        Console.WriteLine("StartPosRight: " + StartPosRight);
-                        return IgnoreOutput;
-                    }
-                    else if (Expression[i].Equals("*"))
-                    {
-                        StartPosLeft = i--;
-                        StartPosRight = i++;
-                        Console.WriteLine("StartPosLeft: " + StartPosLeft);
-                        Console.WriteLine("StartPosRight: " + StartPosRight);
-                        return IgnoreOutput;
-                    }
-                    else if (Expression[i].Equals("/"))
-                    {
-                        StartPosLeft = i--;
-                        StartPosRight = i++;
-                        Console.WriteLine("StartPosLeft: " + StartPosLeft);
-                        Console.WriteLine("StartPosRight: " + StartPosRight);
-                        return IgnoreOutput;
-                    }
-                    else if (Expression[i].Equals("+"))
-                    {
-                        StartPosLeft = i--;
-                        StartPosRight = i++;
-                        Console.WriteLine("StartPosLeft: " + StartPosLeft);
-                        Console.WriteLine("StartPosRight: " + StartPosRight);
-                        return IgnoreOutput;
-                    }
-                    else if (Expression[i].Equals("-"))
-                    {
-                        StartPosLeft = i--;
-                        StartPosRight = i++;
-                        Console.WriteLine("StartPosLeft: " + StartPosLeft);
-                        Console.WriteLine("StartPosRight: " + StartPosRight);
-                        return IgnoreOutput;
-                    }
-                    else
-                    {
-                        Console.WriteLine("Invalid input. Missing operators.");
-                        return IgnoreOutput;
-                    }
+                    return i;
                 }
-                return IgnoreOutput;
-
+                else if (Expression[i].Equals("*"))
+                {
+                    return i;
+                }
+                else if (Expression[i].Equals("/"))
+                {
+                    return i;
+                }
+                else if (Expression[i].Equals("+"))
+                {
+                    return i;
+                }
+                else if (Expression[i].Equals("-"))
+                {
+                    return i;
+                }
             }
-
-            
-            CheckOperators(ref StartPosLeft, ref StartPosRight);
-
-
-            string output = "";
-
-            return output;
-
+            return -1;
         }
+
         //Goes to left untill it hits an operator then saves and sends as variable 
         public static string NumberToLeft(string Expression, string StartPosSLeft)
         {
@@ -312,7 +276,7 @@ namespace ManyProjects
 
             string temp = "";
             string simplePart = "";
-
+            string expressionOperator = "";
             int operatorIndex = 0;
             string[] operators = { "+", "-", "*", "/", "^" };
             for (int i = 0; i < operators.Length; i++)//determine which operator the Layered Expression uses.
@@ -324,12 +288,14 @@ namespace ManyProjects
                 }
             }
 
-            while (Expression.Contains(operators[operatorIndex]) && !(IsSimple(Expression)))//loop until reduced to a simple expression.
+            expressionOperator = operators[operatorIndex];
+
+            while (Expression.Contains(expressionOperator) && !(IsSimple(Expression)))//loop until reduced to a simple expression.
             {
-                temp = Expression.Substring(0, Expression.IndexOf(operators[operatorIndex]) + 1);
+                temp = Expression.Substring(0, Expression.IndexOf(expressionOperator) + 1);
                 Expression = Expression.Remove(0, temp.Length);
-                simplePart = String.Concat(temp, Expression.Substring(0, Expression.IndexOf(operators[operatorIndex])));
-                Expression = Expression.Remove(0, Expression.IndexOf(operators[operatorIndex]));
+                simplePart = String.Concat(temp, Expression.Substring(0, Expression.IndexOf(expressionOperator)));
+                Expression = Expression.Remove(0, Expression.IndexOf(expressionOperator));
                 temp = EvaluateSimpleExpression(simplePart).ToString();
                 Expression = String.Concat(temp, Expression);
             }
