@@ -25,26 +25,7 @@ namespace ManyProjects
             Console.WriteLine("\nPositionStartPos:\n");
             int StartPosLeft = 0;
             int StartPosRight = 0;
-            string PositionStartPos = CalculatorHelper.PositionStartPos(Expression, ref StartPosLeft, ref StartPosRight);
-            Console.WriteLine("This is PositionStartPos: " + PositionStartPos);
 
-            //Goes to the left untill it hits an operator then saves and sends as a variable.
-            Console.WriteLine("\nNumber to Side:\n");
-            string StartPosSLeft = "10";
-            string NumberLeft = CalculatorHelper.NumberToLeft(PositionStartPos, Expression, StartPosSLeft);
-            Console.WriteLine("Number Left: " + NumberLeft+"\n");
-
-            //Goes to the side untill it hits an operator then saves and sends as a variable.
-            string StartPosSRight = "12";
-            string NumberRight = CalculatorHelper.NumberToRight(PositionStartPos, Expression, StartPosSRight);
-            Console.WriteLine("Number Right: " + NumberRight);
-
-            /*
-            Console.WriteLine("EvaluateLayeredExpression:");
-            string SimpleCalculation = "1+3";
-            float EvaluateLayeredExpressionFloat = CalculatorHelper.EvaluateLayeredExpression(SimpleCalculation);
-            Console.WriteLine(EvaluateLayeredExpressionFloat);
-            */
             return Expression;
            
         }
