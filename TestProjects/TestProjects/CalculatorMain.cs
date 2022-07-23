@@ -2,29 +2,32 @@ namespace ManyProjects
 {
     public static class CalculatorMain
     {
-        public static string OrderOfOperations(string Expression)
+        public static string OrderOfOperations(string Expression, string SimpleCalculation)
         {
-
-            int CounterParentheses = 0;
-
-            Console.WriteLine("This is the OrderExpression input: " + Expression);
+            for (int i = 0; i != Expression.Length; i++)
+            {
+                Console.WriteLine(Expression[i] + "{" + i + "}");
+            }
 
             //splits Our input on the ( with the help of InterpretParentheses().
+            Console.WriteLine("InterpretParentheses was called");
             List<string> InputParenthesesList = new List<string>();
             InputParenthesesList = CalculatorHelper.InterpretParentheses(Expression);
-            //writes out InputParenthesesList
-            Console.WriteLine("\nInterpreParentheses:");
-            Console.WriteLine("Amount of strings in InputParenthesesList: {0}", InputParenthesesList.Count);
 
-            for (int i = 0; i < InputParenthesesList.Count; i++)
+            foreach (string s in CalculatorHelper.InterpretParentheses(Expression))
             {
-                Console.WriteLine(InputParenthesesList[CounterParentheses]);
-                CounterParentheses++;
+                Console.WriteLine(s);
             }
-            //saves the position of operators in a string
-            Console.WriteLine("\nPositionStartPos:\n");
-            int StartPosLeft = 0;
-            int StartPosRight = 0;
+            Console.WriteLine("EvaluateSimpleExpression was called");
+            var ResultSimpleExpression = CalculatorHelper.EvaluateSimpleExpression(SimpleCalculation);
+            Console.WriteLine("Results EvaluateSimpleExpression: " + ResultSimpleExpression);
+
+            Console.WriteLine("IsMultipleoperators was called");
+            var ResultIsLayerd = CalculatorHelper.IsMultipleOperators(Expression);
+            Console.WriteLine("Results IsMultipleoperators: " + ResultIsLayerd);
+
+
+
 
             return Expression;
            

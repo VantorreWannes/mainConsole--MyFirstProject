@@ -32,7 +32,7 @@ namespace ManyProjects
                 }
 
             }
-
+           
             return SubExpressions;
         }
 
@@ -95,10 +95,19 @@ namespace ManyProjects
             Regex Tester = new Regex(SIMPLE_EXPRESSION_REGEX);
             return Tester.IsMatch(Expression);
         }
-        public static bool IsLayered(string Expression)
+        /// <summary>
+        /// Determines if a given string Expression is "layered" or not.
+        /// </summary>
+        /// <param name="Expression".</param> Any string expression.
+        /// <returns> true if the expression is layered. </returns>
+        public static bool IsMultipleOperators(string Expression)
         {
-            Regex Tester = new Regex(SIMPLE_EXPRESSION_REGEX);
-            return Tester.IsMatch(Expression);
+            string input = "-+";
+            string pattern = "[+-¨*/]";
+            var arr = Regex.Matches(input, "[+-]").OfType<Match>().Select(m => m.Value).ToArray();
+            bool isAllEqual = arr.Distinct().Count() == 1;
+            Console.WriteLine(isAllEqual);
+            return isAllEqual;
         }
 
         /// <summary>
@@ -125,7 +134,7 @@ namespace ManyProjects
 
             expressionOperator = operators[operatorIndex];
 
-            while !(IsSimple(Expression))//loop until reduced to a simple expression.
+            while (!(IsSimple(Expression)))//loop until reduced to a simple expression.
             {
                 temp = Expression.Substring(0, Expression.IndexOf(expressionOperator) + 1);
                 Expression = Expression.Remove(0, temp.Length);
