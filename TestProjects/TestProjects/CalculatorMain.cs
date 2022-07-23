@@ -5,7 +5,7 @@ namespace ManyProjects
         public static string OrderOfOperations()
         {
             //(123¨2)-689 * 567
-            string OrderInput = "1+2+5-9";
+            string OrderInput = "[+^*/-]";
             string SimpleCalculation = "1+3";
             string MultipleOperatorsCalculation = "1+3";
             for (int i = 0; i != OrderInput.Length; i++)

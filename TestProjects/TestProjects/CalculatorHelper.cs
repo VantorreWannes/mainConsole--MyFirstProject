@@ -103,16 +103,11 @@ namespace ManyProjects
         /// <returns> true if the expression is layered. </returns>
         public static bool IsLayered(string Expression)
         {
-            var arr = Regex.Matches(Expression, "[+¨*/-]").OfType<Match>().Select(m => m.Value).ToArray();
+            var arr = Regex.Matches(Expression, "[+^*/-]").OfType<Match>().Select(m => m.Value).ToArray();
             bool isAllEqual = arr.Distinct().Count() == 1;
             if (isAllEqual){return true;}
             return false;
         }
-        /// <summary>
-        /// Determines if a given string Expression has multiple operators or not.
-        /// </summary>
-        /// <param name="Expression".</param> Any string expression.
-        /// <returns> true if the expression doesn't have multiple operators.</returns>
 
         /// <summary>
         /// Determines the operator from a given string.
@@ -129,7 +124,7 @@ namespace ManyProjects
                 OperatorS = arr[1];
                 return OperatorS;
             }
-            return "error";
+            return "Error";
         }
 
         /// <summary>
