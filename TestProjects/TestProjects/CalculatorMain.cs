@@ -5,7 +5,7 @@ namespace ManyProjects
         public static string OrderOfOperations()
         {
             string OrderInput = "(123¨2)-689*567";
-            string SimpleCalculation = "1+-3";
+            string SimpleCalculation = "1+3";
             string MultipleOperatorsCalculation = "1+3";
             for (int i = 0; i != OrderInput.Length; i++)
             {
@@ -24,20 +24,16 @@ namespace ManyProjects
             Console.WriteLine("EvaluateSimpleExpression was called");
             var ResultSimpleExpression = CalculatorHelper.EvaluateSimpleExpression(SimpleCalculation);
             Console.WriteLine("Results EvaluateSimpleExpression: " + ResultSimpleExpression);
-
-            Console.WriteLine("IsMultipleoperators was called");
             
-            var ResultIsMultipleOperators = CalculatorHelper.IsMultipleOperators(MultipleOperatorsCalculation);
-            Console.WriteLine("Results IsMultipleoperators: " + ResultIsMultipleOperators);
 
-            string Operator = "";
-            Console.WriteLine("WhatOperator");
-            var ResultWhatOperator = CalculatorHelper.WhatOperator(MultipleOperatorsCalculation, ref Operator);
-            Console.WriteLine("Results IsWhatOperator: " + ResultWhatOperator);
+            string OperatorS = "";
+            Console.WriteLine("WhatOperator was called");
+            var Operator = CalculatorHelper.WhatOperator(MultipleOperatorsCalculation, ref OperatorS);
+            Console.WriteLine("Results IsWhatOperator: " + Operator);
 
 
             Console.WriteLine("Islayered was called");
-            var ResultIsLayerd = CalculatorHelper.IsLayered(OrderInput);
+            var ResultIsLayerd = CalculatorHelper.IsLayered(MultipleOperatorsCalculation);
             Console.WriteLine("Results IsLayered: " + ResultIsLayerd);
             return OrderInput;
            

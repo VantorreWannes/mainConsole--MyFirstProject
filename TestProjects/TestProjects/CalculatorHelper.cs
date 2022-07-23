@@ -103,12 +103,9 @@ namespace ManyProjects
         /// <returns> true if the expression is layered. </returns>
         public static bool IsLayered(string Expression)
         {
-            bool HasMultipleOperators = CalculatorHelper.IsMultipleOperators(Expression);
-
-            if (HasMultipleOperators)
-            {
-                return true;
-            }
+            var arr = Regex.Matches(Expression, "[+¨*/-]").OfType<Match>().Select(m => m.Value).ToArray();
+            bool isAllEqual = arr.Distinct().Count() == 1;
+            if (isAllEqual){return true;}
             return false;
         }
         /// <summary>
@@ -116,26 +113,21 @@ namespace ManyProjects
         /// </summary>
         /// <param name="Expression".</param> Any string expression.
         /// <returns> true if the expression doesn't have multiple operators.</returns>
-        public static bool IsMultipleOperators(string Expression)
-        {
-            var arr = Regex.Matches(Expression, "[+¨*/-]").OfType<Match>().Select(m => m.Value).ToArray();
-            bool isAllEqual = arr.Distinct().Count() == 1;
-            return isAllEqual;
-        }
+
         /// <summary>
         /// Determines the operator from a given string.
         /// </summary>
         /// <param name="Expression".</param> Any string expression.
         /// <returns> returns the operator from the string if IsMultipleOperators is false .</returns>
-        public static string WhatOperator(string Expression, ref string Operator)
+        public static string WhatOperator(string Expression, ref string OperatorS)
         {
            
-            bool HasMultipleOperators = CalculatorHelper.IsMultipleOperators(Expression);
+            bool HasMultipleOperators = CalculatorHelper.IsLayered(Expression);
             if (HasMultipleOperators)
             {
                 var arr = Regex.Matches(Expression, "[+-¨*/]").OfType<Match>().Select(m => m.Value).ToArray();
-                Operator = arr[1];
-                return Operator;
+                OperatorS = arr[1];
+                return OperatorS;
             }
             return "error";
         }
