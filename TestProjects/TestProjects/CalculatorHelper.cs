@@ -5,6 +5,7 @@ namespace ManyProjects
     public static class CalculatorHelper
     {
         const string SIMPLE_EXPRESSION_REGEX = "^[0-9]{1,50}[\\.,]{0,1}[0-9]{0,50}[+\\-^*/]{1}[0-9]{1,50}[\\.,]{0,1}[0-9]{0,50}$";
+
         static CalculatorHelper()
         {
 
@@ -95,10 +96,40 @@ namespace ManyProjects
             Regex Tester = new Regex(SIMPLE_EXPRESSION_REGEX);
             return Tester.IsMatch(Expression);
         }
+        /// <summary>
+        /// Determines if a given string Expression is "layered" or not.
+        /// </summary>
+        /// <param name="Expression".</param> Any string expression.
+        /// <returns> true if the expression is layered. </returns>
         public static bool IsLayered(string Expression)
         {
-            Regex Tester = new Regex(SIMPLE_EXPRESSION_REGEX);
-            return Tester.IsMatch(Expression);
+            var arr = Regex.Matches(Expression, "[+¨*/-]").OfType<Match>().Select(m => m.Value).ToArray();
+            bool isAllEqual = arr.Distinct().Count() == 1;
+            if (isAllEqual){return true;}
+            return false;
+        }
+        /// <summary>
+        /// Determines if a given string Expression has multiple operators or not.
+        /// </summary>
+        /// <param name="Expression".</param> Any string expression.
+        /// <returns> true if the expression doesn't have multiple operators.</returns>
+
+        /// <summary>
+        /// Determines the operator from a given string.
+        /// </summary>
+        /// <param name="Expression".</param> Any string expression.
+        /// <returns> returns the operator from the string if IsMultipleOperators is false .</returns>
+        public static string WhatOperator(string Expression, ref string OperatorS)
+        {
+           
+            bool HasMultipleOperators = CalculatorHelper.IsLayered(Expression);
+            if (HasMultipleOperators)
+            {
+                var arr = Regex.Matches(Expression, "[+-¨*/]").OfType<Match>().Select(m => m.Value).ToArray();
+                OperatorS = arr[1];
+                return OperatorS;
+            }
+            return "error";
         }
 
         /// <summary>
@@ -125,7 +156,7 @@ namespace ManyProjects
 
             expressionOperator = operators[operatorIndex];
 
-            while (!IsSimple(Expression))//loop until reduced to a simple expression.
+            while (!(IsSimple(Expression)))//loop until reduced to a simple expression.
             {
                 temp = Expression.Substring(0, Expression.IndexOf(expressionOperator) + 1);
                 Expression = Expression.Remove(0, temp.Length);

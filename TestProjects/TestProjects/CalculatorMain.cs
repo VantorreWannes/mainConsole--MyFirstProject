@@ -2,31 +2,41 @@ namespace ManyProjects
 {
     public static class CalculatorMain
     {
-        public static string OrderOfOperations(string Expression)
+        public static string OrderOfOperations()
         {
-
-            int CounterParentheses = 0;
-
-            Console.WriteLine("This is the OrderExpression input: " + Expression);
+            //(123¨2)-689 * 567
+            string OrderInput = "1+2+5-9";
+            string SimpleCalculation = "1+3";
+            string MultipleOperatorsCalculation = "1+3";
+            for (int i = 0; i != OrderInput.Length; i++)
+            {
+                Console.WriteLine(OrderInput[i] + "{" + i + "}");
+            }
 
             //splits Our input on the ( with the help of InterpretParentheses().
+            Console.WriteLine("InterpretParentheses was called");
             List<string> InputParenthesesList = new List<string>();
-            InputParenthesesList = CalculatorHelper.InterpretParentheses(Expression);
-            //writes out InputParenthesesList
-            Console.WriteLine("\nInterpreParentheses:");
-            Console.WriteLine("Amount of strings in InputParenthesesList: {0}", InputParenthesesList.Count);
+            InputParenthesesList = CalculatorHelper.InterpretParentheses(OrderInput);
 
-            for (int i = 0; i < InputParenthesesList.Count; i++)
+            foreach (string s in CalculatorHelper.InterpretParentheses(OrderInput))
             {
-                Console.WriteLine(InputParenthesesList[CounterParentheses]);
-                CounterParentheses++;
+                Console.WriteLine(s);
             }
-            //saves the position of operators in a string
-            Console.WriteLine("\nPositionStartPos:\n");
-            int StartPosLeft = 0;
-            int StartPosRight = 0;
+            Console.WriteLine("EvaluateSimpleExpression was called");
+            var ResultSimpleExpression = CalculatorHelper.EvaluateSimpleExpression(SimpleCalculation);
+            Console.WriteLine("Results EvaluateSimpleExpression: " + ResultSimpleExpression);
+            
 
-            return Expression;
+            string OperatorS = "";
+            Console.WriteLine("WhatOperator was called");
+            var Operator = CalculatorHelper.WhatOperator(OrderInput, ref OperatorS);
+            Console.WriteLine("Results IsWhatOperator: " + Operator);
+
+
+            Console.WriteLine("Islayered was called");
+            var ResultIsLayerd = CalculatorHelper.IsLayered(OrderInput);
+            Console.WriteLine("Results IsLayered: " + ResultIsLayerd);
+            return OrderInput;
            
         }
     }
