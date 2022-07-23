@@ -2,19 +2,22 @@ namespace ManyProjects
 {
     public static class CalculatorMain
     {
-        public static string OrderOfOperations(string Expression, string SimpleCalculation)
+        public static string OrderOfOperations()
         {
-            for (int i = 0; i != Expression.Length; i++)
+            string OrderInput = "(123¨2)-689*567";
+            string SimpleCalculation = "1+3";
+            string MultipleOperatorsCalculation = "1+-3";
+            for (int i = 0; i != OrderInput.Length; i++)
             {
-                Console.WriteLine(Expression[i] + "{" + i + "}");
+                Console.WriteLine(OrderInput[i] + "{" + i + "}");
             }
 
             //splits Our input on the ( with the help of InterpretParentheses().
             Console.WriteLine("InterpretParentheses was called");
             List<string> InputParenthesesList = new List<string>();
-            InputParenthesesList = CalculatorHelper.InterpretParentheses(Expression);
+            InputParenthesesList = CalculatorHelper.InterpretParentheses(OrderInput);
 
-            foreach (string s in CalculatorHelper.InterpretParentheses(Expression))
+            foreach (string s in CalculatorHelper.InterpretParentheses(OrderInput))
             {
                 Console.WriteLine(s);
             }
@@ -23,13 +26,13 @@ namespace ManyProjects
             Console.WriteLine("Results EvaluateSimpleExpression: " + ResultSimpleExpression);
 
             Console.WriteLine("IsMultipleoperators was called");
-            var ResultIsLayerd = CalculatorHelper.IsMultipleOperators(Expression);
-            Console.WriteLine("Results IsMultipleoperators: " + ResultIsLayerd);
+            var ResultIsMultipleOperators = CalculatorHelper.IsMultipleOperators(OrderInput);
+            Console.WriteLine("Results IsMultipleoperators: " + ResultIsMultipleOperators);
 
-
-
-
-            return Expression;
+            Console.WriteLine("Islayered was called");
+            var ResultIsLayerd = CalculatorHelper.IsLayered(OrderInput);
+            Console.WriteLine("Results IsLayered: " + ResultIsLayerd);
+            return OrderInput;
            
         }
     }

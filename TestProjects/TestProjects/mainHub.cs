@@ -53,9 +53,9 @@ namespace ManyProjects
                         break;
 
                     case ConsoleKey.NumPad5:
-                        string SimpleCalculation = "1+3";
-                        string OrderInput = "(123¨2)-689*567";
-                        var Result = CalculatorMain.OrderOfOperations(OrderInput, SimpleCalculation);
+                        
+                        
+                        var Result = CalculatorMain.OrderOfOperations();
                         break;
 
 

@@ -5,6 +5,7 @@ namespace ManyProjects
     public static class CalculatorHelper
     {
         const string SIMPLE_EXPRESSION_REGEX = "^[0-9]{1,50}[\\.,]{0,1}[0-9]{0,50}[+\\-^*/]{1}[0-9]{1,50}[\\.,]{0,1}[0-9]{0,50}$";
+        
         static CalculatorHelper()
         {
 
@@ -100,13 +101,23 @@ namespace ManyProjects
         /// </summary>
         /// <param name="Expression".</param> Any string expression.
         /// <returns> true if the expression is layered. </returns>
+        public static bool IsLayered(string Expression)
+        {
+
+            bool HasMultipleOperators = CalculatorHelper.IsMultipleOperators(Expression);
+            bool a = true;
+            return a;
+        }
+        /// <summary>
+        /// Determines if a given string Expression has multiple operators or not.
+        /// </summary>
+        /// <param name="Expression".</param> Any string expression.
+        /// <returns> true if the expression doesn't have multiple operators. </returns>
         public static bool IsMultipleOperators(string Expression)
         {
-            string input = "-+";
-            string pattern = "[+-¨*/]";
-            var arr = Regex.Matches(input, "[+-]").OfType<Match>().Select(m => m.Value).ToArray();
+            string input = Expression;
+            var arr = Regex.Matches(input, "[+-¨*/]").OfType<Match>().Select(m => m.Value).ToArray();
             bool isAllEqual = arr.Distinct().Count() == 1;
-            Console.WriteLine(isAllEqual);
             return isAllEqual;
         }
 
