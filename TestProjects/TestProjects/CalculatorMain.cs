@@ -4,7 +4,8 @@ namespace ManyProjects
     {
         public static string OrderOfOperations()
         {
-            string OrderInput = "(123¨2)-689*567";
+            //(123¨2)-689 * 567
+            string OrderInput = "1+2+5-9";
             string SimpleCalculation = "1+3";
             string MultipleOperatorsCalculation = "1+3";
             for (int i = 0; i != OrderInput.Length; i++)
@@ -28,12 +29,12 @@ namespace ManyProjects
 
             string OperatorS = "";
             Console.WriteLine("WhatOperator was called");
-            var Operator = CalculatorHelper.WhatOperator(MultipleOperatorsCalculation, ref OperatorS);
+            var Operator = CalculatorHelper.WhatOperator(OrderInput, ref OperatorS);
             Console.WriteLine("Results IsWhatOperator: " + Operator);
 
 
             Console.WriteLine("Islayered was called");
-            var ResultIsLayerd = CalculatorHelper.IsLayered(MultipleOperatorsCalculation);
+            var ResultIsLayerd = CalculatorHelper.IsLayered(OrderInput);
             Console.WriteLine("Results IsLayered: " + ResultIsLayerd);
             return OrderInput;
            
