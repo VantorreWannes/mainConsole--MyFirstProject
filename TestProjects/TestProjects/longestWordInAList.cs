@@ -1,5 +1,4 @@
-﻿using System;
-namespace ManyProjects
+﻿namespace ManyProjects
 {
 
     public class longestWordInAList
@@ -24,15 +23,13 @@ namespace ManyProjects
 
                 if (readText[counter].Length >= lengthOfWord)
                 {
-
-
-                    //wordRn = word;
                     lengthOfWord = readText[counter].Length;
                     word = readText[counter];
                 }
                 else
                 {
-
+                    string.Format("", "");
+                    Calculator calculator = new();
                 }
                 counter++;
 

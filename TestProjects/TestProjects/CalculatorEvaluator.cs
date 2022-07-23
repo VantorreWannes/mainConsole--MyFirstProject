@@ -6,7 +6,15 @@ using System.Threading.Tasks;
 
 namespace TestProjects
 {
-    internal class CalculatorEvaluator
+    public class CalculatorEvaluator
     {
+        //default constructor.(do not use)
+        static CalculatorEvaluator() { }
+
+        ///
+        public static bool DivideCompoundExpression(string Expression)
+        {
+            return true;
+        }
     }
 }
