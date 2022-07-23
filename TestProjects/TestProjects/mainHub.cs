@@ -15,7 +15,7 @@ namespace ManyProjects
             Console.WriteLine("Please write 1 for a longest word in a list checker.\n");
             Console.WriteLine("Please write 2 for a simple character counter.\n");
             Console.WriteLine("Please write 3 for a better longest word in a sentence checker.\n");
-            Console.WriteLine("Please write 4 for a calculator.\n");
+            Console.WriteLine("Please write 4 for a left to right reader (calculator).\n");
             Console.WriteLine("Press Q to stop");
             
             ConsoleKeyInfo input;
@@ -61,12 +61,11 @@ namespace ManyProjects
 
                 }
 
-
                 Console.WriteLine("\nMAIN MENU!\n");
                 Console.WriteLine("Please write 1 for a longest word in a list checker.");
                 Console.WriteLine("Please write 2 for a simple character counter.");
                 Console.WriteLine("Please write 3 for a better longest word in a sentence checker.");
-                Console.WriteLine("Please write 4 for a calculator.");
+                Console.WriteLine("Please write 4 for a left to right reader (calculator).");
                 Console.WriteLine("Press Q to stop");
 
 

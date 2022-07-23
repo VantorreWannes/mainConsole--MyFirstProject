@@ -105,7 +105,7 @@ namespace ManyProjects
         {
             var arr = Regex.Matches(Expression, "[+^*/-]").OfType<Match>().Select(m => m.Value).ToArray();
             bool isAllEqual = arr.Distinct().Count() == 1;
-            if (isAllEqual){return true;}
+            if (isAllEqual) { return true; }
             return false;
         }
 
@@ -116,7 +116,7 @@ namespace ManyProjects
         /// <returns> returns the operator from the string if IsMultipleOperators is false .</returns>
         public static string WhatOperator(string Expression, ref string OperatorS)
         {
-           
+
             bool HasMultipleOperators = CalculatorHelper.IsLayered(Expression);
             if (HasMultipleOperators)
             {
