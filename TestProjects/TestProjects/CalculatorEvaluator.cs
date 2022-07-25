@@ -15,68 +15,58 @@ namespace ManyProjects
         /// <returns>List/<String/> output </returns> the string but split acordingly.
         public static string SplitCompoundExpression(string CompoundCalculation, int SplitOn)
         {
-            var Reordered = "";
+            //var Reordered = "";
             Console.WriteLine("LengthOfCompound: " + CompoundCalculation.Length);
-            string[] SplitString = { };
+            //string[] SplitString = { };
             var RegexArrayString = Regex.Matches(CompoundCalculation, "[+^*/-]").OfType<Match>().Select(m => m.Value).ToArray();
             string[] Operators = { "-", "+", "/", "*", "^" };
             string CombinedString = CompoundCalculation.Replace("+", "+S").Replace("-", "-S").Replace("*", "*S").Replace("/", "/S").Replace("^", "^S");
             Console.WriteLine("CombinedString: " + CombinedString);
-            List<int> IndexOfOperatorList = new List<int>();
+            List<int> IndexOfSList = new List<int>();
             var ListTwo = CombinedString.ToCharArray().ToList();
             int SOccurrences = ListTwo.Count(x => x == 'S');
             Console.WriteLine("Soccurrences: " + SOccurrences);
-            int s = 0;int p = 0; int o = 0;int x = 0;
-            while (s < ListTwo.Count)
+            int s = 0; int p = -1; int x = 0;
+            while (s < SOccurrences)
             {
-                if (s >= SOccurrences) { break; }
-                ++p;
-                p = CombinedString.IndexOf('S', p);
-                
+                x = p + 1;
+                p = CombinedString.IndexOf('S', x);
                 Console.WriteLine("p: " + p);
-                IndexOfOperatorList.Add(p);
-
-               s++;
-               
+                Console.WriteLine("ListTwo: " + ListTwo[p]);
+                IndexOfSList.Add(p);
+                s++;
             }
-            Console.WriteLine("Test");
-            int h = 0;
-            while (h < ListTwo.Count);
-            {
-                int RemoveAtIndex = IndexOfOperatorList[h];
-                RemoveAtIndex = RemoveAtIndex - h;
-                ListTwo.RemoveAt(RemoveAtIndex);
-                //++RemoveAtIndex;
-                ListTwo.Insert(RemoveAtIndex, 'S');
 
-                Console.WriteLine("RemoveAtIndex: " + RemoveAtIndex);
-                Console.WriteLine("h: " + h);
-                h++;
-            }
-            Reordered = string.Join(string.Empty, ListTwo);
-            Console.WriteLine("IndexOfOperatorList.Count: " + IndexOfOperatorList.Count);
-             Console.WriteLine("Reordered: " + Reordered); 
-            
 
             string ReorderedCombinedString = "";
             for (int i = 4; i >= SplitOn; i--)
             {
-                ReorderedCombinedString = Reordered.Replace(Operators[i] + "S", Operators[i]); Console.WriteLine("ReorderedCombinedString: " + CombinedString);
-                
+                ReorderedCombinedString = CombinedString.Replace(Operators[i] + "S", Operators[i]); Console.WriteLine("ReorderedCombinedString: " + CombinedString);
+
             }
             return ReorderedCombinedString;
         }
+
         public static bool ProcessCompoundExpression(string ReorderedCombinedString)
         {
+            Console.WriteLine("Split");
             String[] SplitString = ReorderedCombinedString.Split("S");
+
             foreach (string Split in SplitString)
             {
                 var RegexArraySplitString = Regex.Matches(Split, "[+^*/-]").OfType<Match>().Select(m => m.Value).ToArray();
+                foreach (var RegexString in RegexArraySplitString)
+                {
+                    Console.WriteLine(RegexString);
+                    Console.WriteLine("Done");
+
+                }
+                bool isAllEqual = RegexArraySplitString.Distinct().Count() == 1;
 
 
+               
             }
             return true;
         }
-
     }
 }

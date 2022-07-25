@@ -44,7 +44,7 @@ namespace ManyProjects
             int SplitOn = 4;
             var ResultCompoundExpression = CalculatorEvaluator.SplitCompoundExpression(CompoundCalculation, SplitOn);
             Console.WriteLine("ResultCompoundExpression: " + ResultCompoundExpression);
-            return OrderInput;
+            
 
             Console.WriteLine("ProcessCompoundExpression was called");
             var ResultProcessCompoundExpression = CalculatorEvaluator.ProcessCompoundExpression(ResultCompoundExpression);

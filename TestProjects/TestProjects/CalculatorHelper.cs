@@ -17,7 +17,7 @@ namespace ManyProjects
         /// <returns>List/<String/> SubExpressions</returns> the list of sub-expressions within the expression.
         public static List<string> InterpretParentheses(string Expression)
         {
-            List<string> SubExpressions = new List<string>();
+           List<string> SubExpressions = new List<string>();
             string Temp = string.Concat(Expression.Where(c => !char.IsWhiteSpace(c)));
             Temp = Temp.Replace(")", ")R").Replace("(", "R(");
 
