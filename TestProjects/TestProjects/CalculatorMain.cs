@@ -1,3 +1,4 @@
+
 namespace ManyProjects
 {
     public static class CalculatorMain
@@ -7,7 +8,8 @@ namespace ManyProjects
             //(123¨2)-689 * 567
             string OrderInput = "[+^*/-]";
             string SimpleCalculation = "1+3";
-            string MultipleOperatorsCalculation = "1+3";
+            string CompoundCalculation = "5+3+5+3-5.21^2^3^4^5+1/5+3/7";
+            //5+3+5+3-5.21^2^3^4^5+1/5+3/7
             for (int i = 0; i != OrderInput.Length; i++)
             {
                 Console.WriteLine(OrderInput[i] + "{" + i + "}");
@@ -36,8 +38,20 @@ namespace ManyProjects
             Console.WriteLine("Islayered was called");
             var ResultIsLayerd = CalculatorHelper.IsLayered(OrderInput);
             Console.WriteLine("Results IsLayered: " + ResultIsLayerd);
+            
+
+            Console.WriteLine("SplitCompoundExpression was called");
+            int SplitOn = 4;
+            var ResultCompoundExpression = CalculatorEvaluator.SplitCompoundExpression(CompoundCalculation, SplitOn);
+            Console.WriteLine("ResultCompoundExpression: " + ResultCompoundExpression);
             return OrderInput;
-           
+
+            Console.WriteLine("ProcessCompoundExpression was called");
+            var ResultProcessCompoundExpression = CalculatorEvaluator.ProcessCompoundExpression(ResultCompoundExpression);
+            Console.WriteLine("ResultProcessCompoundExpression: " + ResultProcessCompoundExpression);
+            return OrderInput;
+
+
         }
     }
 }
