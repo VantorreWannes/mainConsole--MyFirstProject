@@ -27,7 +27,6 @@ namespace ManyProjects
             int SOccurrences = ListTwo.Count(x => x == 'S');
             Console.WriteLine("Soccurrences: " + SOccurrences);
             int s = 0;int p = 0; int o = 0;int x = 0;
-
             while (s < ListTwo.Count)
             {
                 if (s >= SOccurrences) { break; }
@@ -54,7 +53,7 @@ namespace ManyProjects
             }
             Reordered = string.Join(string.Empty, ListTwo);
             Console.WriteLine("IndexOfOperatorList.Count: " + IndexOfOperatorList.Count);
-            Console.WriteLine("Reordered: " + Reordered); 
+             Console.WriteLine("Reordered: " + Reordered); 
             
 
             string ReorderedCombinedString = "";
