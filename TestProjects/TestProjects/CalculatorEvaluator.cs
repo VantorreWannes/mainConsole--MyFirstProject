@@ -37,7 +37,9 @@ namespace ManyProjects
                 IndexOfOperatorList.Add(p);
 
                s++;
+               
             }
+            Console.WriteLine("Test");
             int h = 0;
             while (h < ListTwo.Count);
             {
@@ -60,13 +62,14 @@ namespace ManyProjects
             for (int i = 4; i >= SplitOn; i--)
             {
                 ReorderedCombinedString = Reordered.Replace(Operators[i] + "S", Operators[i]); Console.WriteLine("ReorderedCombinedString: " + CombinedString);
-                SplitString = ReorderedCombinedString.Split("S");
+                
             }
             return ReorderedCombinedString;
         }
-        public static bool ProcessCompoundExpression(string Expression)
+        public static bool ProcessCompoundExpression(string ReorderedCombinedString)
         {
-            foreach (string Split in Expression)
+            String[] SplitString = ReorderedCombinedString.Split("S");
+            foreach (string Split in SplitString)
             {
                 var RegexArraySplitString = Regex.Matches(Split, "[+^*/-]").OfType<Match>().Select(m => m.Value).ToArray();
 
