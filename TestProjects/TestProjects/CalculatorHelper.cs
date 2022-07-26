@@ -103,7 +103,7 @@ namespace ManyProjects
         /// <returns> true if the expression is layered. </returns>
         public static bool IsLayered(string Expression)
         {
-            var arr = Regex.Matches(Expression, "[+^*/-]").OfType<Match>().Select(m => m.Value).ToArray();
+            var arr = Regex.Matches(Expression, "").OfType<Match>().Select(m => m.Value).ToArray();
             bool isAllEqual = arr.Distinct().Count() == 1;
             if (isAllEqual) { return true; }
             return false;

@@ -17,7 +17,7 @@ namespace ManyProjects
         {
             Console.WriteLine("LengthOfCompound: " + CompoundCalculation.Length);           
             string[] Operators = { "-", "+", "/", "*", "^" };
-            string CombinedString = CompoundCalculation.Replace("+", "+S").Replace("-", "-S").Replace("*", "*S").Replace("/", "/S").Replace("^", "^S");
+            string CombinedString = CompoundCalculation.Replace("+", "S+S").Replace("-", "S-S").Replace("*", "S*S").Replace("/", "S/S").Replace("^", "S^S");
             Console.WriteLine("CombinedString: " + CombinedString);
             List<int> IndexOfSList = new List<int>();
             var ListTwo = CombinedString.ToCharArray().ToList();
@@ -38,7 +38,7 @@ namespace ManyProjects
             string ReorderedCombinedString = "";
             for (int i = 4; i >= SplitOn; i--)
             {
-                ReorderedCombinedString = CombinedString.Replace(Operators[i] + "S", Operators[i]); Console.WriteLine("ReorderedCombinedString: " + CombinedString);
+                ReorderedCombinedString = CombinedString.Replace("S"+Operators[i] + "S", Operators[i]); Console.WriteLine("ReorderedCombinedString: " + CombinedString);
 
             }
             return ReorderedCombinedString;
@@ -54,6 +54,7 @@ namespace ManyProjects
             Console.WriteLine("Split");
             String[] SplitString = ReorderedCombinedString.Split("S");
             string[] Operators = { "-", "+", "/", "*", "^" };
+            string OperatorSplitOn = Operators[SplitOn];
             int i = 0;
             string LeaveEmpty = " ";
             List<string> RegexArraySplitStringList = new List<string>();
@@ -66,7 +67,7 @@ namespace ManyProjects
                 ++i;
             }
             i = 0;
-            while (RegexArraySplitStringList[i].Distinct() != Operators[SplitOn]) { Console.WriteLine("Ran"); if (RegexArraySplitStringList[0].ToString().Equals("^")) { Console.WriteLine("Found it!"); }; }
+            //while(RegexArraySplitStringList[i].Distinct() != Operators[SplitOn]) { Console.WriteLine("Ran"); if (RegexArraySplitStringList[0].ToString().Equals("^")) { Console.WriteLine("Found it!"); }; }
            
             return "error";
         }
