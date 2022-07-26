@@ -47,7 +47,7 @@ namespace ManyProjects
             
 
             Console.WriteLine("ProcessCompoundExpression was called");
-            var ResultProcessCompoundExpression = CalculatorEvaluator.ProcessCompoundExpression(ResultCompoundExpression);
+            var ResultProcessCompoundExpression = CalculatorEvaluator.ProcessCompoundExpression(ResultCompoundExpression, SplitOn);
             Console.WriteLine("ResultProcessCompoundExpression: " + ResultProcessCompoundExpression);
             return OrderInput;
 

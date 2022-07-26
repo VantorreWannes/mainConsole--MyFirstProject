@@ -15,10 +15,7 @@ namespace ManyProjects
         /// <returns>List/<String/> output </returns> the string but split acordingly.
         public static string SplitCompoundExpression(string CompoundCalculation, int SplitOn)
         {
-            //var Reordered = "";
-            Console.WriteLine("LengthOfCompound: " + CompoundCalculation.Length);
-            //string[] SplitString = { };
-            var RegexArrayString = Regex.Matches(CompoundCalculation, "[+^*/-]").OfType<Match>().Select(m => m.Value).ToArray();
+            Console.WriteLine("LengthOfCompound: " + CompoundCalculation.Length);           
             string[] Operators = { "-", "+", "/", "*", "^" };
             string CombinedString = CompoundCalculation.Replace("+", "+S").Replace("-", "-S").Replace("*", "*S").Replace("/", "/S").Replace("^", "^S");
             Console.WriteLine("CombinedString: " + CombinedString);
@@ -47,26 +44,31 @@ namespace ManyProjects
             return ReorderedCombinedString;
         }
 
-        public static bool ProcessCompoundExpression(string ReorderedCombinedString)
+        /// <summary>
+        /// This method takes A combined String splits it and proceces a compound expression if it contains one 
+        /// </summary>
+        /// <param name="Expression"></param> is the mathematical expression that the user input
+        /// <returns>List/<String/> output </returns> the string but split and processed acordingly .
+        public static string ProcessCompoundExpression(string ReorderedCombinedString, int SplitOn)
         {
             Console.WriteLine("Split");
             String[] SplitString = ReorderedCombinedString.Split("S");
-
-            foreach (string Split in SplitString)
+            string[] Operators = { "-", "+", "/", "*", "^" };
+            int i = 0;
+            string LeaveEmpty = " ";
+            List<string> RegexArraySplitStringList = new List<string>();
+            foreach (var Split in SplitString)
             {
+                if(i >= SplitString.Count()-1) { break; }
                 var RegexArraySplitString = Regex.Matches(Split, "[+^*/-]").OfType<Match>().Select(m => m.Value).ToArray();
-                foreach (var RegexString in RegexArraySplitString)
-                {
-                    Console.WriteLine(RegexString);
-                    Console.WriteLine("Done");
-
-                }
-                bool isAllEqual = RegexArraySplitString.Distinct().Count() == 1;
-
-
-               
+                RegexArraySplitStringList.Add(RegexArraySplitString[0]);
+                Console.WriteLine(RegexArraySplitString[0]);
+                ++i;
             }
-            return true;
+            i = 0;
+            while (RegexArraySplitStringList[i].Distinct() != Operators[SplitOn]) { Console.WriteLine("Ran"); if (RegexArraySplitStringList[0].ToString().Equals("^")) { Console.WriteLine("Found it!"); }; }
+           
+            return "error";
         }
     }
 }
