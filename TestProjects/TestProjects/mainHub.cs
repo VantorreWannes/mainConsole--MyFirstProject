@@ -27,36 +27,36 @@ namespace ManyProjects
                 if(input.Key == ConsoleKey.Q){ System.Environment.Exit(1); }
 
 
-                    switch (input.Key)
-                {
+                switch (input.Key) { 
+
                     //NumPad1
                     case ConsoleKey.NumPad1:
-                        var longestWordInAList = new longestWordInAList();
-                        longestWordInAList.ClassOne();
-                        break;
+                    var longestWordInAList = new longestWordInAList();
+                    longestWordInAList.ClassOne();
+                    break;
 
-                    case ConsoleKey.NumPad2:
-                        var SimpleCharacterCounter = new SimpleCharacterCounter();
-                        SimpleCharacterCounter.ClassTwo();
-                        break;
-                        
+                case ConsoleKey.NumPad2:
+                    var SimpleCharacterCounter = new SimpleCharacterCounter();
+                    SimpleCharacterCounter.ClassTwo();
+                    break;
 
-                    case ConsoleKey.NumPad3:
-                        var longestWordInAListBetter = new longestWordInAListBetter();
-                        longestWordInAListBetter.ClassOneV2();
-                        break;
 
-                    case ConsoleKey.NumPad4:
-                        var Calculator = new Calculator();
-                        Calculator.calculatorMain();
-                        //Console.WriteLine("You did it!"); 
-                        break;
+                case ConsoleKey.NumPad3:
+                    var longestWordInAListBetter = new longestWordInAListBetter();
+                    longestWordInAListBetter.ClassOneV2();
+                    break;
 
-                    case ConsoleKey.NumPad5:
-                        
-                        
-                        var Result = CalculatorMain.OrderOfOperations();
-                        break;
+                case ConsoleKey.NumPad4:
+                    var Calculator = new Calculator();
+                    Calculator.calculatorMain();
+                    //Console.WriteLine("You did it!"); 
+                    break;
+
+                case ConsoleKey.NumPad5:
+
+
+                    var Result = CalculatorMain.OrderOfOperations();
+                    break;
 
 
                 }
