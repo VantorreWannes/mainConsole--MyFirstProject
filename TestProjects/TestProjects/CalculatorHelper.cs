@@ -130,7 +130,7 @@ namespace ManyProjects
         }
 
         /// <summary>
-        /// (BROKEN) Evaluates a "layered expression". A "layered" expresssion consists of a string of mathematical operations with only 1 operation type such as 5*5*5*5.
+        /// Evaluates a "layered expression". A "layered" expresssion consists of a string of mathematical operations with only 1 operation type such as 5*5*5*5.
         /// </summary>
         /// <param name="Expression"></param> A string expression with one operation type.
         /// <returns></returns> returns the value of the decimal
