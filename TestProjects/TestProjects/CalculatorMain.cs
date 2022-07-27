@@ -7,11 +7,13 @@ namespace ManyProjects
         {
             //(123¨2)-689 * 567
             int SplitOn = 4;
-            string OrderInput = "[+^*/-]";
+            string LayeredExpression = "4^2";
             string BracketCalculation = "(1+(5*3^2)5-(5/10*9)*2(5*2^2))";
 
+            bool ResultIsLayerdOne = CalculatorHelper.IsLayered(LayeredExpression);
+            Console.WriteLine(ResultIsLayerdOne);
 
-            Console.WriteLine("SplitBrackets was called");
+          /*  Console.WriteLine("SplitBrackets was called");
             var DeepestString = CalculatorEvaluator.SplitBrackets(BracketCalculation);
             Console.WriteLine("Finished Result: " + DeepestString);
 
@@ -25,7 +27,7 @@ namespace ManyProjects
             }
             else
             {
-                var ResultIsLayerd = CalculatorHelper.HasLayered(DeepestString);
+                var ResultIsLayerd = CalculatorHelper.IsLayered(DeepestString);
                 Console.WriteLine("Results IsLayered: " + ResultIsLayerd);
                 if (ResultIsLayerd)
                 {
@@ -63,10 +65,9 @@ namespace ManyProjects
 
 
                 }
-
-
-            }
-            return OrderInput;
+           
+            }*/
+            return "Error";
         }
     }
 }

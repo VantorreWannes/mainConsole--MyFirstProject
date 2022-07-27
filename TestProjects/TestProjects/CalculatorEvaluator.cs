@@ -20,7 +20,7 @@ namespace ManyProjects
             string[] Operators = { "-", "+", "/", "*", "^" };
             string CombinedString = CompoundCalculation.Replace("+", "S+S").Replace("-", "S-S").Replace("*", "S*S").Replace("/", "S/S").Replace("^", "S^S");
             Console.WriteLine("CombinedString: " + CombinedString);
-
+        
             StringBuilder ReorderedCombinedString = new StringBuilder(CombinedString);
 
             ReorderedCombinedString.Replace("S" + Operators[SplitOn] + "S", Operators[SplitOn]); Console.WriteLine("ReorderedCombinedString1: " + CombinedString);
@@ -43,7 +43,7 @@ namespace ManyProjects
             string[] SplitString = ReorderedCombinedString.Split("S");
             foreach (string Split in SplitString)
             {
-                bool Islayered = CalculatorHelper.HasLayered(Split); Console.WriteLine(Islayered);
+                bool Islayered = CalculatorHelper.IsLayered(Split); Console.WriteLine(Islayered);
                 Console.WriteLine("SplitString: " + Split);
                 if (Islayered)
                 {
