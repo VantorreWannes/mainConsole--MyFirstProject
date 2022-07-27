@@ -68,5 +68,39 @@ namespace ManyProjects
             }
             return true;
         }
+
+        /// <summary>
+        /// Takes in a compound expression, evaluates exponential terms, substitutes values into the expression, and then returns the simplified expression.
+        /// </summary>
+        /// <param name="Expression"></param>
+        /// <returns></returns>
+        public static string EvaluateCompoundExponents(string Expression)
+        {
+            Expression.Replace("+", "S+S").Replace("-", "S-S").Replace("*", "S*S").Replace("/", "S/S");
+            List<string> SplitExpression = new List<string>();
+            string[] temp = Expression.Split("S");
+
+            for (int i = 0; i < temp.Length; i++)
+            {
+                if (!(CalculatorHelper.IsLayered(temp[i])) && !(CalculatorHelper.IsSimple(temp[i])))
+                {
+                    SplitExpression.Add(temp[i]);
+                }
+                else if (CalculatorHelper.IsLayered(temp[i]))
+                {
+                    SplitExpression.Add(CalculatorHelper.EvaluateLayeredExpression(temp[i]).ToString());
+                }
+                else if (CalculatorHelper.IsSimple(temp[i]))
+                {
+                    SplitExpression.Add(CalculatorHelper.EvaluateSimpleExpression(temp[i]).ToString());
+                }
+            }
+            string ReducedExpression = "";
+            foreach (string s in SplitExpression)
+            {
+                ReducedExpression = String.Concat(ReducedExpression,s);
+            }
+            return ReducedExpression;
+        }
     }
 }
