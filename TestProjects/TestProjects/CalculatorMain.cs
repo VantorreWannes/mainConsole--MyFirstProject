@@ -9,8 +9,8 @@ namespace ManyProjects
             
             string LayeredExpression = "1^2^1";
             string BracketCalculation = "(1+(5*3^2)5-(5/10*9)*2(5*2^2))";
-            string CompoundCalculation = "4^3-1+1^1^1-1/1^1";
-
+            string CompoundCalculation = "4^3-1+1+1^1-1/1^1";
+            //4^3-1+1+1^1-1/1^1
             string ResultWhatOperator = CalculatorHelper.WhatOperator(LayeredExpression);
             bool ResultLayeredExpression = CalculatorHelper.IsLayered(LayeredExpression);
             Console.WriteLine(ResultLayeredExpression);
