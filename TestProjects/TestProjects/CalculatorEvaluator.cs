@@ -125,6 +125,38 @@ namespace ManyProjects
             Console.WriteLine("TotalMax: "+TotalMax);
             return "error";
         }
+
+        public static string EvaluateCompoundExponential(string Expression)
+        {
+            Expression = Expression.Replace("+", "S+S").Replace("-", "S-S").Replace("*", "S*S").Replace("/", "S/S");
+            List<string> SplitExpression = new List<string>();
+            string[] temp = Expression.Split("S");
+
+            Console.WriteLine(CalculatorHelper.IsLayered("-"));
+
+            for (int i = 0; i < temp.Length; i++)
+            {
+                if (!(CalculatorHelper.IsLayered(temp[i])) && !(CalculatorHelper.IsSimple(temp[i])))
+                {
+                    SplitExpression.Add(temp[i]);
+                }
+                else if (CalculatorHelper.IsSimple(temp[i]))
+                {
+                    SplitExpression.Add(CalculatorHelper.EvaluateSimpleExpression(temp[i]).ToString());
+                }
+                else if (CalculatorHelper.IsLayered(temp[i]))
+                {
+                    SplitExpression.Add(CalculatorHelper.EvaluateLayeredExpression(temp[i]).ToString());
+                }
+            }
+            string ReducedExpression = "";
+            foreach (string s in SplitExpression)
+            {
+                ReducedExpression = String.Concat(ReducedExpression,s);
+            }
+
+            return ReducedExpression;
+        }
     }
 }
 

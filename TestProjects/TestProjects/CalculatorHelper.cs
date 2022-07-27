@@ -102,7 +102,7 @@ namespace ManyProjects
         /// </summary>
         /// <param name="Expression".</param> Any string expression.
         /// <returns> true if the expression is layered. </returns>
-        public static bool HasLayered(string Expression)
+        public static bool IsLayered(string Expression)
         {
             
             var Arr = Regex.Matches(Expression, @"[\^+\-*=]").OfType<Match>().Select(m => m.Value).ToList();
