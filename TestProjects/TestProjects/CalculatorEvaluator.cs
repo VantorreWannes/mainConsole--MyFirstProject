@@ -57,60 +57,28 @@ namespace ManyProjects
             return Output;
         }
 
-        /// <summary>
-        /// This method takes the brackets, splits and processes accordingly
-        /// </summary>
-        /// <param name="Expression"></param> is the mathematical expression that the user input
-        /// <returns>List/<String/> output </returns> the string but split acordingly.
-        public static string WorkOutBrackets(string BracketCalculation, string BracketsAndS)
+
+        public static int CheckHowDeep(string BracketsAndS, ref int TotalMax)
         {
-            string ResultSplitCompoundExpression = "";
-            int SplitOn = 1;
-            string OperatorS = "";
-            string[] SplitBrackets = BracketsAndS.Split("S");
-            int AmountOfTimes = 0;
-            foreach (string Split in SplitBrackets) { Console.WriteLine("Split: " + Split); if (Split.Contains('(')) { ++AmountOfTimes; Console.WriteLine("AmountOfTimes: " + AmountOfTimes); } }
-            while (AmountOfTimes > 0)
-            {
-                foreach (string Split in SplitBrackets)
-                {
-                    if (Split.Contains("("))
-                    {
-                        string SplitNoBrackets = Split.Replace("(", "").Replace(")", "");
-                        ResultSplitCompoundExpression = CalculatorEvaluator.SplitCompoundExpression(SplitNoBrackets, SplitOn);
-                        Console.WriteLine("ResultSplitCompoundExpression: " + ResultSplitCompoundExpression);
-                        var ResultProcessCompoundExpression = CalculatorEvaluator.ProcessCompoundExpression(ResultSplitCompoundExpression, ref SplitOn, OperatorS);
-                        Console.WriteLine("ResultProcessCompoundExpression: " + ResultProcessCompoundExpression);
-                    }
-
-                }
-                --AmountOfTimes;
-            }
-            //var ResultSplitCompoundExpression = CalculatorEvaluator.SplitCompoundExpression(BracketCalculation, SplitOn);
-
-
-            return "error";
-        }
-        public static string SplitBrackets(string BracketCalculation)
-        {
-            string CurrentString = BracketCalculation;
-            string BracketsAndS = BracketCalculation.Replace("(", "S(").Replace(")", ")S");
-            Console.WriteLine("BracketsAndS: " + BracketsAndS);
             int Max = 0;
-            int TotalMax = 0;
+            int DistanceTemp = 0;
             Stack<char> BracketsStack = new Stack<char>();
+            List<int> TotalMaxlist = new List<int>();
             for (int i = 0; i < BracketsAndS.Length; i++)
             {
                 if (BracketsAndS[i] == '(')
                 {
+                    ++DistanceTemp;
+                    Console.WriteLine("Distance: " + DistanceTemp);
                     ++Max;
                     BracketsStack.Push('(');
                     if (Max > TotalMax)
                     {
                         TotalMax = Max;
+                        TotalMaxlist.Add(DistanceTemp);
+                        Console.WriteLine("totalmax: "+TotalMax);
                         Console.WriteLine(Max);
                     }
-
                 }
                 if (BracketsAndS[i] == ')')
                 {
@@ -122,16 +90,56 @@ namespace ManyProjects
 
                 }
             }
-            Console.WriteLine("TotalMax: "+TotalMax);
-            return "error";
+            int j = 0;
+            int Distance = 0;
+            int TotalMaxlistMinusOne = TotalMaxlist.Count - 1;
+            while (j < TotalMaxlistMinusOne)
+            {
+                Console.WriteLine("Distance1: "+Distance);
+                ++Distance;
+                ++j;
+            }
+            ++Distance;
+            return Distance;
         }
+        public static string SplitBrackets(string BracketCalculation)
+        {
+            
+            string CurrentString = BracketCalculation;
+            string BracketsAndS = BracketCalculation.Replace("(", "S(").Replace(")", ")S");
+            for (int i = 0; i != BracketsAndS.Length; i++)
+            {
+                Console.WriteLine(BracketsAndS[i] + "{" + i + "}");
+            }
 
-        /*
-        Console.WriteLine("WorkOutBrackets was called");
-        var ResultWorkOutBracketsBrackets = CalculatorEvaluator.WorkOutBrackets(BracketCalculation, BracketsAndS);
-        Console.WriteLine("ResultWorkOutBrackets: " + ResultWorkOutBracketsBrackets);
-        */
+            int TotalMax = 0;
+            var Distance = CalculatorEvaluator.CheckHowDeep(BracketsAndS, ref TotalMax);
+            int w = 0;
+            int f = 0;
+            int x = 0;
+            while (w < Distance)
+            {
 
+                if (BracketsAndS.Substring(f).Contains("("))
+                {
+                    f = BracketsAndS.IndexOf("(", f);
+                    Console.WriteLine("f: " + f);
+                    x = BracketsAndS.IndexOf(")", f);
+                    Console.WriteLine("length: " + x);
+
+                }
+                else
+                { break; }
+                ++f;
+                ++w;
+            }
+            int Length = x - f;
+            Console.WriteLine("Length: " + x);
+            string DeepestString = BracketsAndS.Substring(f, Length);
+            Console.WriteLine("DeepestString: " + DeepestString);
+            Console.WriteLine("LevelOfDeepness: " + Distance);
+            return DeepestString;
+        }
     }
 }
 
