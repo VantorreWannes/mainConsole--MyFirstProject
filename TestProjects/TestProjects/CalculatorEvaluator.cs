@@ -125,13 +125,6 @@ namespace ManyProjects
             Console.WriteLine("TotalMax: "+TotalMax);
             return "error";
         }
-
-        /*
-        Console.WriteLine("WorkOutBrackets was called");
-        var ResultWorkOutBracketsBrackets = CalculatorEvaluator.WorkOutBrackets(BracketCalculation, BracketsAndS);
-        Console.WriteLine("ResultWorkOutBrackets: " + ResultWorkOutBracketsBrackets);
-        */
-
     }
 }
 
