@@ -105,8 +105,8 @@ namespace ManyProjects
         public static bool HasLayered(string Expression)
         {
             
-            var Arr = Regex.Matches(Expression, @"\d[\^+\-*=]\d").OfType<Match>().Select(m => m.Value).ToList();
-            bool isAllEqual = Arr.Distinct().Count() > 0;
+            var Arr = Regex.Matches(Expression, @"[\^+\-*=]").OfType<Match>().Select(m => m.Value).ToList();
+            bool isAllEqual = Arr.Distinct().Count() < 1;
             if (isAllEqual) { return true; }
             return false;
         }
@@ -119,13 +119,17 @@ namespace ManyProjects
         public static string WhatOperator(string Expression)
         {
 
-            bool HasMultipleOperators = CalculatorHelper.HasLayered(Expression);
-            if (HasMultipleOperators == false)
-            {
+            /*bool HasMultipleOperators = CalculatorHelper.HasLayered(Expression);
+            bool IsSimple = CalculatorHelper.IsSimple(Expression);
+            if (HasMultipleOperators|IsSimple)
+            {*/
                 var Arr = Regex.Matches(Expression, @"[\^+\-*=]").OfType<Match>().Select(m => m.Value).ToList();
-               string  OperatorS = Arr[1];
+                string OperatorS = Arr[0];
                 return OperatorS;
-            }
+            /*}
+            else {
+                return "Wasn't a layered or Simple Expression";
+            }*/
            return "Error";
         }
 
