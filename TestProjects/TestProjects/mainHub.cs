@@ -52,7 +52,7 @@ namespace ManyProjects
                     //Console.WriteLine("You did it!"); 
                     break;
 
-                case ConsoleKey.NumPad5:
+                case ConsoleKey.D1:
 
 
                     var Result = CalculatorMain.OrderOfOperations();

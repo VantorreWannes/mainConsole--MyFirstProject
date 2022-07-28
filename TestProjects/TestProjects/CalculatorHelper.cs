@@ -112,8 +112,6 @@ namespace ManyProjects
             int NumbersCount = Numbers.Count()-1;
             int OperatorCount = Operators.Count()-1;
             if (NumbersModulo != 0 && Operators.Count() >= 2 && Numbers.Count >= 3) { Numbers.RemoveAt(NumbersCount); Operators.RemoveAt(OperatorCount); }
-            foreach (var num in Numbers) { Console.WriteLine(num); }
-            foreach (var op in Operators) { Console.WriteLine(op); }
             if (Operators.Count() == Numbers.Count() / 2 && Operators.Count() >= 1 ) { return true; }
             return false;
         }
@@ -128,8 +126,7 @@ namespace ManyProjects
             string OperatorS = "error no opperator";
             var Arr = Regex.Matches(Expression, @"[\^+\-*=]").OfType<Match>().Select(m => m.Value).ToList();
              if(Arr.Count() > 0) { OperatorS = Arr[0]; }
-            Console.WriteLine("OperatorS1: " + OperatorS);
-
+           
             return OperatorS;
 
 
@@ -147,8 +144,7 @@ namespace ManyProjects
             string simplePart = "";
             string expressionOperator = "";
             expressionOperator = OperatorS; //operator the layered expression uses
-            Console.WriteLine("operatorS" + OperatorS);
-
+      
             while (!(IsSimple(Expression)))//loop until reduced to a simple expression.
             {
                 temp = Expression.Substring(0, Expression.IndexOf(expressionOperator) + 1);
@@ -158,7 +154,6 @@ namespace ManyProjects
                 temp = EvaluateSimpleExpression(simplePart).ToString();
                 Expression = String.Concat(temp, Expression);
             }
-            Console.WriteLine("operatorS" + OperatorS);
             return EvaluateSimpleExpression(Expression);
         }
 
