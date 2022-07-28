@@ -96,6 +96,31 @@ namespace ManyProjects
             Regex Tester = new Regex(SIMPLE_EXPRESSION_REGEX);
             return Tester.IsMatch(Expression);
         }
+
+/// <summary>
+        /// Determines if a given string Expression is "layered" or not.
+        /// </summary>
+        /// <param name="Expression".</param> Any string expression.
+        /// <returns> true if the expression is layered. </returns>
+        public static bool IsCompound(string Expression)
+        {
+           var Operators = Regex.Matches(Expression, @"[\^+\-*/]").OfType<Match>().Select(m => m.Value).ToList();
+            var Numbers = Regex.Matches(Expression, @"[0-9]{1,50}[\\.,]{0,1}[0-9]{0,50}").OfType<Match>().Select(m => m.Value).ToList();
+            bool IsTrue = false;
+            int NumbersCount = Numbers.Count();
+            int OperatorCount = Operators.Count();
+            int Counter = 0;
+            while(Counter < (Numbers.Count()+Operators.Count())-3)
+            { if ( OperatorCount == NumbersCount-1) { IsTrue = true;  }else{ IsTrue = false;}
+             Numbers.RemoveAt(NumbersCount-1); Operators.RemoveAt(OperatorCount-1); 
+             NumbersCount = Numbers.Count();
+             OperatorCount = Operators.Count();
+            }
+           if ( IsTrue == true) { return true; }
+            return false;
+        }
+
+
         /// <summary>
         /// Determines if a given string Expression is "layered" or not.
         /// </summary>
@@ -103,16 +128,21 @@ namespace ManyProjects
         /// <returns> true if the expression is layered. </returns>
         public static bool IsLayered(string Expression)
         {
-            var Operators = Regex.Matches(Expression, @"[\^+\-*=]").OfType<Match>().Select(m => m.Value).ToList();
+            var Operators = Regex.Matches(Expression, @"[\^+\-*/]").OfType<Match>().Select(m => m.Value).ToList();
             bool isOperatorEqual = Operators.Distinct().Count() == 1;
+            Console.WriteLine("isOperatorEqual: "+isOperatorEqual);
             var Numbers = Regex.Matches(Expression, @"[0-9]{1,50}[\\.,]{0,1}[0-9]{0,50}").OfType<Match>().Select(m => m.Value).ToList();
-           
-            int NumbersModulo = Numbers.Count() % 2;
-            float NumbersDevided = Numbers.Count() / 2;
-            int NumbersCount = Numbers.Count()-1;
-            int OperatorCount = Operators.Count()-1;
-            if (NumbersModulo != 0 && Operators.Count() >= 2 && Numbers.Count >= 3) { Numbers.RemoveAt(NumbersCount); Operators.RemoveAt(OperatorCount); }
-            if (Operators.Count() == Numbers.Count() / 2 && Operators.Count() >= 1 ) { return true; }
+            bool IsTrue = false;
+            int NumbersCount = Numbers.Count();
+            int OperatorCount = Operators.Count();
+            int Counter = 0;
+            while(Counter < (Numbers.Count()+Operators.Count())-3)
+            { if ( OperatorCount == NumbersCount-1) { IsTrue = true;  }else{ IsTrue = false;}
+             Numbers.RemoveAt(NumbersCount-1); Operators.RemoveAt(OperatorCount-1); 
+             NumbersCount = Numbers.Count();
+             OperatorCount = Operators.Count();
+            }
+           if ( IsTrue == true && isOperatorEqual == true) { return true; }
             return false;
         }
 
@@ -123,8 +153,8 @@ namespace ManyProjects
         /// <returns> returns the operator from the string if IsMultipleOperators is false .</returns>
         public static string WhatOperator(string Expression)
         {
-            string OperatorS = "error no opperator";
-            var Arr = Regex.Matches(Expression, @"[\^+\-*=]").OfType<Match>().Select(m => m.Value).ToList();
+            string OperatorS = "error no operator";
+            var Arr = Regex.Matches(Expression, @"[\^+\-*/]").OfType<Match>().Select(m => m.Value).ToList();
              if(Arr.Count() > 0) { OperatorS = Arr[0]; }
            
             return OperatorS;
@@ -153,9 +183,11 @@ namespace ManyProjects
                 Expression = Expression.Remove(0, Expression.IndexOf(expressionOperator));
                 temp = EvaluateSimpleExpression(simplePart).ToString();
                 Expression = String.Concat(temp, Expression);
+               
             }
             return EvaluateSimpleExpression(Expression);
         }
+       
 
     }
 }
