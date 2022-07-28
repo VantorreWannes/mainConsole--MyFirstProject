@@ -109,9 +109,29 @@ namespace ManyProjects
                 SplitExpression.Clear();
                 if (Operators[SplitOn].Equals("m")) { return ReducedExpression; }
 
-                --SplitOn;//move the next operator precedence
+                
+                 --SplitOn;
                 ReducedExpression = ReducedExpression.Replace("+", "S+S").Replace("-", "S-S").Replace("*", "S*S").Replace("/", "S/S");
-                ReducedExpression = ReducedExpression.Replace("S" + Operators[SplitOn] + "S", Operators[SplitOn]);//remove S around current operator               
+                ReducedExpression = ReducedExpression.Replace("S" + Operators[SplitOn] + "S", Operators[SplitOn]);//remove S around current operator   
+                if(SplitOn == 4)
+                {--SplitOn; ReducedExpression = ReducedExpression.Replace("S" + Operators[SplitOn] + "S", Operators[SplitOn]);
+                 Console.WriteLine("Reduced Expression: "+ReducedExpression);
+                 string[] ArrayReducedExpression = ReducedExpression.Split("S");
+                 foreach(string Exp in ArrayReducedExpression)
+                 {
+
+                 }
+                }
+                /*
+                if(SplitOn == 2)
+                {--SplitOn; ReducedExpression = ReducedExpression.Replace("S" + Operators[SplitOn] + "S", "S" + Operators[SplitOn]);
+                 Console.WriteLine("Reduced Expression1: "+ReducedExpression);  
+                 int IndexOfS = ReducedExpression.IndexOf('S');
+                 ReducedExpression.Remove(IndexOfS, 1);
+                  Console.WriteLine("Reduced Expression2: "+ReducedExpression);  
+                }*/
+                
+                Console.WriteLine("Reduced Expression FINAL"+ReducedExpression);              
                 ArrayExpression = ReducedExpression.Split("S");
             }
 
