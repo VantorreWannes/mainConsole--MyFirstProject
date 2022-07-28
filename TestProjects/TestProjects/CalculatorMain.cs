@@ -6,10 +6,21 @@ namespace ManyProjects
         public static string OrderOfOperations()
         {
             //(123¨2)-689 * 567
-            int SplitOn = 4;
-            string OrderInput = "[+^*/-]";
+            
+            string LayeredExpression = "1^2^1";
             string BracketCalculation = "(1+(5*3^2)5-(5/10*9)*2(5*2^2))";
+            string CompoundCalculation = "4^3-1+1+1^1-1/1^1";
+            //4^3-1+1+1^1-1/1^1
+            string ResultWhatOperator = CalculatorHelper.WhatOperator(LayeredExpression);
+            bool ResultLayeredExpression = CalculatorHelper.IsLayered(LayeredExpression);
+            Console.WriteLine(ResultLayeredExpression);
+            //var DeepestString = CalculatorEvaluator.WorkOutBrackets(BracketCalculation);
+            //string ResultMaxBrackets = CalculatorEvaluator.MaxBrackets(BracketCalculation);
 
+           string ResultCompound = CalculatorEvaluator.EvaluateCompoundExponential(CompoundCalculation);
+
+            /*bool ResultIsLayerd = CalculatorHelper.IsLayered(LayeredExpression);
+            Console.WriteLine(ResultIsLayerd);
 
             Console.WriteLine("SplitBrackets was called");
             var DeepestString = CalculatorEvaluator.SplitBrackets(BracketCalculation);
@@ -25,7 +36,7 @@ namespace ManyProjects
             }
             else
             {
-                var ResultIsLayerd = CalculatorHelper.HasLayered(DeepestString);
+                var ResultIsLayerd = CalculatorHelper.IsLayered(DeepestString);
                 Console.WriteLine("Results IsLayered: " + ResultIsLayerd);
                 if (ResultIsLayerd)
                 {
@@ -63,10 +74,9 @@ namespace ManyProjects
 
 
                 }
-
-
-            }
-            return OrderInput;
+           
+            }*/
+            return "Error";
         }
     }
 }
