@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Wannes\\Desktop\\JokNavi\\Code C#\\mainConsole-1\\TestProjects\\TestProjects\\TestProjects.csproj",
+      "projectUniqueName": "C:\\Users\\Wannes\\Desktop\\JokNavi\\Code C#\\mainConsole-1\\mainConsole\\TestProjects\\TestProjects\\TestProjects.csproj",
       "projectName": "TestProjects",
-      "projectPath": "C:\\Users\\Wannes\\Desktop\\JokNavi\\Code C#\\mainConsole-1\\TestProjects\\TestProjects\\TestProjects.csproj",
+      "projectPath": "C:\\Users\\Wannes\\Desktop\\JokNavi\\Code C#\\mainConsole-1\\mainConsole\\TestProjects\\TestProjects\\TestProjects.csproj",
       "packagesPath": "C:\\Users\\Wannes\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Wannes\\Desktop\\JokNavi\\Code C#\\mainConsole-1\\TestProjects\\TestProjects\\obj\\",
+      "outputPath": "C:\\Users\\Wannes\\Desktop\\JokNavi\\Code C#\\mainConsole-1\\mainConsole\\TestProjects\\TestProjects\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Wannes\\AppData\\Roaming\\NuGet\\NuGet.Config",

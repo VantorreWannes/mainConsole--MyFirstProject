@@ -130,7 +130,7 @@ namespace ManyProjects
         {
             var Operators = Regex.Matches(Expression, @"[\^+\-*/]").OfType<Match>().Select(m => m.Value).ToList();
             bool isOperatorEqual = Operators.Distinct().Count() == 1;
-            Console.WriteLine("isOperatorEqual: "+isOperatorEqual);
+            //Console.WriteLine("isOperatorEqual: "+isOperatorEqual);
             var Numbers = Regex.Matches(Expression, @"[0-9]{1,50}[\\.,]{0,1}[0-9]{0,50}").OfType<Match>().Select(m => m.Value).ToList();
             bool IsTrue = false;
             int NumbersCount = Numbers.Count();

@@ -14,8 +14,9 @@
                 ConsoleKeyInfo Hessa;
                 do
                 {
+                    Hessa = Console.ReadKey();
                     //while (Console.KeyAvailable == false){Thread.Sleep(250);}
-                   Hessa = Console.ReadKey(true);
+                   
                     Console.WriteLine("You pressed the '{0}' key.", Hessa.Key);
 
                     //Console.WriteLine("\nYou entered: " + input.Key);
