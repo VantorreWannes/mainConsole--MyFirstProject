@@ -169,7 +169,6 @@ namespace ManyProjects
         /// <returns></returns> returns the value of the decimal
         public static decimal EvaluateLayeredExpression(string Expression, string OperatorS)
         {
-
             string temp = "";
             string simplePart = "";
             string expressionOperator = "";
