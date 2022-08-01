@@ -27,7 +27,7 @@ namespace ManyProjects
                     if (Split.Contains("("))
                     {
                         string SplitNoBrackets = Split.Replace("(", "").Replace(")", "");
-                        ResultSplitCompoundExpression = CalculatorEvaluator.EvaluateCompoundExponential(SplitNoBrackets);
+                        ResultSplitCompoundExpression = CalculatorEvaluator.EvaluateCompound(SplitNoBrackets);
                     }
 
                 }
@@ -68,107 +68,49 @@ namespace ManyProjects
             return "error";
         }
 
-        public static string EvaluateCompoundExponential(string Expression)
+        public static string EvaluateCompound(string Expression)
         {
+            string ExpressionLocal = Expression;
             string ReducedExpression = "";
-            Console.WriteLine("Expression" + Expression);
+            Console.WriteLine("Expression" + ExpressionLocal);
             int SplitOn = 5;
-            string[] Operator = { "m", @"\-", "+", "/", "*", @"\^" };
-            Expression = Expression.Replace("+", "S+S").Replace("-", "S-S").Replace("*", "S*S").Replace("/", "S/S").Replace("^", "S^S");
-            Expression = Expression.Replace("S" + Operator[SplitOn] + "S", Operator[SplitOn]);//remove 'S' from exponentials
-            List<string> SplitExpression = new List<string>();
-            string[] ArrayExpression = Expression.Split("S");
+            string[] Operator = { "m", "-", "+", "/", "*", "^" };
+            ExpressionLocal = ExpressionLocal.Replace("+", "S+S").Replace("-", "S+-S").Replace("*", "S*S").Replace("/", "S/S").Replace("^", "S^S");
+             List<string> ListExpression = ExpressionLocal.Split("S").ToList();
             string OperatorS = "";
-            while( SplitOn >= 0)
-            {   if(SplitOn<=4){
-                Expression = Expression.Replace("S" + Operator[SplitOn] + "S", Operator[SplitOn]);//remove 'S' from exponentials
-                ArrayExpression = Expression.Split("S");
-                --SplitOn;
-                }
-                Expression = Expression.Replace("S" + Operator[SplitOn] + "S", Operator[SplitOn]);//remove 'S' from exponentials
-                ArrayExpression = Expression.Split("S");
-                for (int i = 0; i < ArrayExpression.Length; i++)
+            while( SplitOn >= 1)
+            {
+                 ExpressionLocal = String.Join("", ListExpression);
+                 ExpressionLocal = ExpressionLocal.Replace("S", "").Replace("+-", "");
+                ExpressionLocal = ExpressionLocal.Replace("+", "S+S").Replace("-", "S+-S").Replace("*", "S*S").Replace("/", "S/S").Replace("^", "S^S");
+                ExpressionLocal = ExpressionLocal.Replace("S" + Operator[SplitOn] + "S", Operator[SplitOn]);//remove 'S' from exponentials
+                ListExpression = ExpressionLocal.Split("S").ToList();
+                for (int i = 0; i < ListExpression.Count(); i++)
                 {
-                    var OperatorSplit = Regex.Matches(ArrayExpression[i], @"[+\-*/]").OfType<Match>().Select(m => m.Value).ToList();
-                    if ((CalculatorHelper.IsCompound(ArrayExpression[i]) && SplitOn <= 4))
+                    if (CalculatorHelper.IsSimple(ListExpression[i]))
                     {
-                        Console.WriteLine("isCompound: " + ArrayExpression[i]);
-                        OperatorS = CalculatorHelper.WhatOperator(ArrayExpression[i]);
-                        SplitExpression.Add(CalculatorEvaluator.EvaluateCompoundExpressionLR(ArrayExpression[i], OperatorS).ToString());
-
+                        
+                        string ResultLR = (CalculatorHelper.EvaluateSimpleExpression(ListExpression[i]).ToString());
+                        Console.WriteLine("isSimple: " + ListExpression[i] + " = " +ResultLR );
+                        ExpressionLocal = ExpressionLocal.Replace(ListExpression[i],"");
+                        ListExpression.Remove(ListExpression[i]);
+                        ListExpression.Insert(i,ResultLR);
                     }
-                    else if (!(CalculatorHelper.IsLayered(ArrayExpression[i])) && !(CalculatorHelper.IsSimple(ArrayExpression[i])))
+                    else if (CalculatorHelper.IsLayered(ListExpression[i]))
                     {
-                        Console.WriteLine("isNothing: " + ArrayExpression[i]);
-                        SplitExpression.Add(ArrayExpression[i]);
+                        OperatorS = CalculatorHelper.WhatOperator(ListExpression[i]);
+                        string ResultLR = (CalculatorHelper.EvaluateLayeredExpression(ListExpression[i], OperatorS).ToString());
+                        Console.WriteLine("isSimple: " + ListExpression[i] + " = " +ResultLR );
+                        ListExpression.Remove(ListExpression[i]);
+                        ListExpression.Insert(i,ResultLR);
                     }
-                    else if (CalculatorHelper.IsSimple(ArrayExpression[i]))
-                    {
-                        Console.WriteLine("isSimple: " + ArrayExpression[i]);
-                        SplitExpression.Add(CalculatorHelper.EvaluateSimpleExpression(ArrayExpression[i]).ToString());
-                    }
-                    else if (CalculatorHelper.IsLayered(ArrayExpression[i]))
-                    {
-                        Console.WriteLine("isLayered: " + ArrayExpression[i]);
-                        OperatorS = CalculatorHelper.WhatOperator(ArrayExpression[i]);
-                        SplitExpression.Add(CalculatorHelper.EvaluateLayeredExpression(ArrayExpression[i], OperatorS).ToString());
-
-                    }
-                    
                 }
                 --SplitOn;
             }
+            ReducedExpression = ListExpression[0].ToString();
             return ReducedExpression;
         }
-
-
-
-
-
-
-
-
-        public static string EvaluateCompoundExpressionLR(string Expression, string OperatorS)
-        {
-
-            List<string> SplitExpressionReduced = new List<string>();
-
-
-            var ReducedOperators = Regex.Matches(Expression, @"[\^+\-*/]").OfType<Match>().Select(m => m.Value).ToList();
-            int IndexOfOperator = Expression.IndexOf(ReducedOperators[0]);
-            IndexOfOperator = Expression.IndexOf(ReducedOperators[1], IndexOfOperator + 1);
-            Expression = Expression.Insert(IndexOfOperator, "S");
-            string[] ExpressionSplit = Expression.Split("S");
-            while (ExpressionSplit.Count() >= 1)
-            {
-
-                if (!(CalculatorHelper.IsLayered(ExpressionSplit[0])) && !(CalculatorHelper.IsSimple(ExpressionSplit[0])))
-                {
-                    Console.WriteLine("error");
-                }
-                else if (CalculatorHelper.IsSimple(ExpressionSplit[0]))
-                {
-                    Console.WriteLine("isSimple1: " + ExpressionSplit[0]);
-                    Expression = Expression.Remove(0 , IndexOfOperator+1);
-                    Expression = (CalculatorHelper.EvaluateSimpleExpression(ExpressionSplit[0]).ToString()) + Expression;
-                }
-                else if (CalculatorHelper.IsLayered(ExpressionSplit[0]))
-                {
-                    Console.WriteLine("isLayered1: " + ExpressionSplit[0]);
-                    OperatorS = CalculatorHelper.WhatOperator(ExpressionSplit[0]);
-                    Expression = Expression.Remove(0 , IndexOfOperator+1);
-                    Expression = (CalculatorHelper.EvaluateLayeredExpression(ExpressionSplit[0], OperatorS).ToString()) + Expression;
-                }
-                ReducedOperators = Regex.Matches(Expression, @"[\^+\-*/]").OfType<Match>().Select(m => m.Value).ToList();
-                if(ReducedOperators.Count()> 1){
-                IndexOfOperator = Expression.IndexOf(ReducedOperators[0]);
-                IndexOfOperator = Expression.IndexOf(ReducedOperators[1], IndexOfOperator + 1);
-                Expression = Expression.Insert(IndexOfOperator, "S");
-                }else{return ExpressionSplit[0];}
-                ExpressionSplit = Expression.Split("S");
-            }
-            return "error";
-        }
+        
     }
 }
 
