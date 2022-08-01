@@ -16,37 +16,55 @@ namespace ManyProjects
         /// <returns>List/<String/> output </returns> the string but split acordingly.
         public static string WorkOutBrackets(string BracketCalculation)
         {
-            string ResultSplitCompoundExpression = "";
+            int MaxBracketsOutput = CalculatorEvaluator.MaxBrackets(BracketCalculation);
             string BracketsAndS = BracketCalculation.Replace("(", "S(").Replace(")", ")S");
-            string[] SplitBrackets = BracketsAndS.Split("S");
-            int AmountOfTimes = 0;
-            while (AmountOfTimes > 0)
+            List<string> WorkedOutBrackets = BracketsAndS.Split("S").ToList();
+            WorkedOutBrackets.RemoveAll(item => string.IsNullOrEmpty(item));
+            List<string> WorkedOutBracketsTemp = new List<string>();
+            Stack<char> BracketsCount = new Stack<char>();
+            while (MaxBracketsOutput >= 0)
             {
-                foreach (string Split in SplitBrackets)
+                foreach (string Split in WorkedOutBrackets)
                 {
-                    if (Split.Contains("("))
+                    if (Split.Contains("(")) { BracketsCount.Push('('); }
+                    if (BracketsCount.Count().Equals(MaxBracketsOutput))
                     {
-                        string SplitNoBrackets = Split.Replace("(", "").Replace(")", "");
-                        ResultSplitCompoundExpression = CalculatorEvaluator.EvaluateCompound(SplitNoBrackets);
+                        string Nobrackets = Split.Replace("(", "").Replace(")", "");
+                        if (CalculatorHelper.IsSimple(Nobrackets) == true) { WorkedOutBracketsTemp.Add(CalculatorHelper.EvaluateSimpleExpression(Nobrackets).ToString()); }
+                        else
+                        {
+                            WorkedOutBracketsTemp.Add(CalculatorEvaluator.EvaluateCompound(Nobrackets));
+                        }
+                    }
+                    else
+                    {
+                        WorkedOutBracketsTemp.Add(Split);
                     }
 
+                    if (Split.Contains(')')) { BracketsCount.Pop(); }
                 }
-                --AmountOfTimes;
+                WorkedOutBrackets.Clear();
+                BracketsAndS = String.Join("", WorkedOutBracketsTemp);
+                BracketsAndS = BracketsAndS.Replace("(", "S(").Replace(")", ")S");
+                WorkedOutBrackets = BracketsAndS.Split("S").ToList();
+                WorkedOutBrackets.RemoveAll(item => string.IsNullOrEmpty(item));
+                WorkedOutBracketsTemp.Clear();
+                --MaxBracketsOutput;
             }
-            return "error";
+            return BracketsAndS;
         }
-        public static string MaxBrackets(string BracketCalculation)
+        public static int MaxBrackets(string BracketCalculation)
         {
             string CurrentString = BracketCalculation;
-            string BracketsAndS = BracketCalculation.Replace("(", "S(").Replace(")", ")S");
+            string Brackets = BracketCalculation;
             int distance = 0;
             int Max = 0;
             int TotalMax = 0;
             Stack<char> BracketsStack = new Stack<char>();
-            for (int i = 0; i < BracketsAndS.Length; i++)
+            for (int i = 0; i < Brackets.Length; i++)
             {
                 ++distance;
-                if (BracketsAndS[i] == '(')
+                if (Brackets[i] == '(')
                 {
                     ++Max;
                     BracketsStack.Push('(');
@@ -56,7 +74,7 @@ namespace ManyProjects
                     }
 
                 }
-                if (BracketsAndS[i] == ')')
+                if (Brackets[i] == ')')
                 {
                     --Max;
                     BracketsStack.Push('(');
@@ -65,23 +83,26 @@ namespace ManyProjects
 
                 }
             }
-            return "error";
+            return TotalMax;
         }
 
+         public static string AddBrackets(string BracketCalculation){
+            int SplitOn = 5;
+                return "error";
+         }
         public static string EvaluateCompound(string Expression)
         {
             string ExpressionLocal = Expression;
             string ReducedExpression = "";
-            Console.WriteLine("Expression" + ExpressionLocal);
             int SplitOn = 5;
             string[] Operator = { "m", "-", "+", "/", "*", "^" };
             ExpressionLocal = ExpressionLocal.Replace("+", "S+S").Replace("-", "S+-S").Replace("*", "S*S").Replace("/", "S/S").Replace("^", "S^S");
-             List<string> ListExpression = ExpressionLocal.Split("S").ToList();
+            List<string> ListExpression = ExpressionLocal.Split("S").ToList();
             string OperatorS = "";
-            while( SplitOn >= 1)
+            while (SplitOn >= 1)
             {
-                 ExpressionLocal = String.Join("", ListExpression);
-                 ExpressionLocal = ExpressionLocal.Replace("S", "").Replace("+-", "");
+                ExpressionLocal = String.Join("", ListExpression);
+                ExpressionLocal = ExpressionLocal.Replace("S", "").Replace("+-", "");
                 ExpressionLocal = ExpressionLocal.Replace("+", "S+S").Replace("-", "S+-S").Replace("*", "S*S").Replace("/", "S/S").Replace("^", "S^S");
                 ExpressionLocal = ExpressionLocal.Replace("S" + Operator[SplitOn] + "S", Operator[SplitOn]);//remove 'S' from exponentials
                 ListExpression = ExpressionLocal.Split("S").ToList();
@@ -89,20 +110,20 @@ namespace ManyProjects
                 {
                     if (CalculatorHelper.IsSimple(ListExpression[i]))
                     {
-                        
+
                         string ResultLR = (CalculatorHelper.EvaluateSimpleExpression(ListExpression[i]).ToString());
-                        Console.WriteLine("isSimple: " + ListExpression[i] + " = " +ResultLR );
-                        ExpressionLocal = ExpressionLocal.Replace(ListExpression[i],"");
+                        Console.WriteLine("isSimple: " + ListExpression[i] + " = " + ResultLR);
+                        ExpressionLocal = ExpressionLocal.Replace(ListExpression[i], "");
                         ListExpression.Remove(ListExpression[i]);
-                        ListExpression.Insert(i,ResultLR);
+                        ListExpression.Insert(i, ResultLR);
                     }
                     else if (CalculatorHelper.IsLayered(ListExpression[i]))
                     {
                         OperatorS = CalculatorHelper.WhatOperator(ListExpression[i]);
                         string ResultLR = (CalculatorHelper.EvaluateLayeredExpression(ListExpression[i], OperatorS).ToString());
-                        Console.WriteLine("isSimple: " + ListExpression[i] + " = " +ResultLR );
+                        Console.WriteLine("isLayered: " + ListExpression[i] + " = " + ResultLR);
                         ListExpression.Remove(ListExpression[i]);
-                        ListExpression.Insert(i,ResultLR);
+                        ListExpression.Insert(i, ResultLR);
                     }
                 }
                 --SplitOn;
@@ -110,7 +131,7 @@ namespace ManyProjects
             ReducedExpression = ListExpression[0].ToString();
             return ReducedExpression;
         }
-        
+
     }
 }
 
