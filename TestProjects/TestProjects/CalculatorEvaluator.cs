@@ -53,7 +53,6 @@ namespace ManyProjects
                 WorkedOutBracketsTemp.Clear();
                 --MaxBracketsOutput;
             }
-            BracketsAndS = BracketsAndS.Replace(",", "");
             string OperatorSTemp = CalculatorHelper.WhatOperator(BracketsAndS);
             if (CalculatorHelper.IsSimple(BracketsAndS) == true) { BracketsAndS = (CalculatorHelper.EvaluateSimpleExpression(BracketsAndS).ToString()); }
             else if (CalculatorHelper.IsLayered(BracketsAndS) == true)
@@ -104,45 +103,34 @@ namespace ManyProjects
         public static string EvaluateCompound(string Expression)
         {
             string ExpressionLocal = Expression;
-            string ReducedExpression = "";
+            //string ReducedExpression = "";
             int SplitOn = 5;
             string[] Operator = { "m", "+-", "+", "/", "*", "^" };
-            ExpressionLocal = ExpressionLocal.Replace("+", "S+S").Replace("-", "S+-S").Replace("*", "S*S").Replace("/", "S/S").Replace("^", "S^S");
-            List<string> ListExpression = ExpressionLocal.Split("S").ToList();
-            string OperatorS = "";
-            while (SplitOn >= 1)
-            {
-                ExpressionLocal = String.Join("", ListExpression);
-                ExpressionLocal = ExpressionLocal.Replace("S", "").Replace("+-", "-");
-                ExpressionLocal = ExpressionLocal.Replace("+", "S+S").Replace("-", "S+-S").Replace("*", "S*S").Replace("/", "S/S").Replace("^", "S^S");
-                ExpressionLocal = ExpressionLocal.Replace("S" + Operator[SplitOn] + "S", Operator[SplitOn]);//remove 'S' from exponentials
-                ListExpression = ExpressionLocal.Split("S").ToList();
-                for (int i = 0; i < ListExpression.Count(); i++)
-                {
-                    if (CalculatorHelper.IsSimple(ListExpression[i]))
-                    {
-                        
-                        string ResultLR = (CalculatorHelper.EvaluateSimpleExpression(ListExpression[i]).ToString());
-                        Console.WriteLine("isSimple: " + ListExpression[i] + " = " + ResultLR);
-                        ExpressionLocal = ExpressionLocal.Replace(ListExpression[i], "");
-                        ListExpression.Remove(ListExpression[i]);
-                        ListExpression.Insert(i, ResultLR);
-                    }
-                    else if (CalculatorHelper.IsLayered(ListExpression[i]))
-                    {
-                        OperatorS = CalculatorHelper.WhatOperator(ListExpression[i]);
-                        string ResultLR = (CalculatorHelper.EvaluateLayeredExpression(ListExpression[i], OperatorS).ToString());
-                        Console.WriteLine("isLayered: " + ListExpression[i] + " = " + ResultLR);
-                        ListExpression.Remove(ListExpression[i]);
-                        ListExpression.Insert(i, ResultLR);
-                    }
-                }
-                --SplitOn;
-            }
-            ReducedExpression = ListExpression[0].ToString();
-            return ReducedExpression;
-        }
 
+
+            var Numbers = Regex.Matches(ExpressionLocal, @"[0-9]{1,50}[\\.,]{0,1}[0-9]{0,50}").OfType<Match>().Select(m => m.Value).ToList();
+
+            int f = 0;
+            while ((f < Numbers.Count()))//loop until reduced to a simple expression.
+            {
+                var Operators = Regex.Matches(ExpressionLocal, @"[\^+\-*/]").OfType<Match>().Select(m => m.Value).ToList();
+                int ReplaceMinus = Operators.FindIndex(s => s == "-");
+                if (ReplaceMinus != -1) { Operators[ReplaceMinus] = "+-"; }
+                ExpressionLocal = ExpressionLocal.Replace("-", "+-");
+                Numbers = Regex.Matches(ExpressionLocal, @"[0-9]{1,50}[\\.,]{0,1}[0-9]{0,50}").OfType<Match>().Select(m => m.Value).ToList();
+                if (Operators.Count() == 1) { string TempR = Numbers[0] + Operators[0] + Numbers[1]; ExpressionLocal = CalculatorHelper.EvaluateSimpleExpression(TempR).ToString(); return ExpressionLocal; }
+                int OperatorIndex = ExpressionLocal.IndexOf(Operators[0]);
+                OperatorIndex = ExpressionLocal.IndexOf(Operators[1], OperatorIndex + 1);
+                //int NumberIndex = ExpressionLocal.IndexOf(Numbers[1], OperatorIndex);
+                string Temp = ExpressionLocal.Substring(0, OperatorIndex);
+                ExpressionLocal = ExpressionLocal.Remove(0, Temp.Length);
+                ExpressionLocal = CalculatorHelper.EvaluateSimpleExpression(Temp).ToString() + ExpressionLocal;
+
+                ++f;
+            }
+            --SplitOn;
+            return "Error";
+        }
     }
 }
 
