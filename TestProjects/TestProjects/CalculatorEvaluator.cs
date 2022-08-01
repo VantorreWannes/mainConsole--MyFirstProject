@@ -103,66 +103,72 @@ namespace ManyProjects
         public static string EvaluateCompound(string Expression)
         {
             string ExpressionLocal = Expression;
-            ExpressionLocal = ExpressionLocal.Replace("-", "+-");
             string[] OperatorInduList = { "m", "-", "+", "/", "*", "^" };
             ExpressionLocal = ExpressionLocal.Replace("+", "S+S").Replace("-", "S-S").Replace("*", "S*S").Replace("/", "S/S").Replace("^", "S^S");
             ExpressionLocal = ExpressionLocal.Replace("S^S", "^"); //remove 'S' from exponentials
             List<string> ExpressionSplit = ExpressionLocal.Split("S").ToList();
-            List<string> ExpressionSplitTemp = new List<string>();
+            List<string> ExpressionSplitTwo = new List<string>();
+            List<string> ExpressionSplitThree = new List<string>();
             int SplitOn = 5;
             string[] Operator = { "m", "+-", "+", "/", "*", "^" };
             var Numbers = Regex.Matches(ExpressionLocal, @"[0-9]{1,50}[\\.,]{0,1}[0-9]{0,50}").OfType<Match>().Select(m => m.Value).ToList();
-            int x = 0;
             string ExpressionTemp = "";
             while (SplitOn >= 1)
             {
-                foreach (var Spl in ExpressionSplit)
+                if (SplitOn == 5)
                 {
-                    string Split = Spl;
-                    String Spli = Split;
-                    if (SplitOn == 5)
+                    foreach (var Spl in ExpressionSplit)
                     {
-                        if (CalculatorHelper.IsSimple(Split) == true) { ExpressionSplitTemp.Add(CalculatorHelper.EvaluateSimpleExpression(Split).ToString()); }
+                        string Split = Spl;
+
+                        if (CalculatorHelper.IsSimple(Split) == true) { ExpressionSplitTwo.Add(CalculatorHelper.EvaluateSimpleExpression(Split).ToString()); }
                         else if (CalculatorHelper.IsLayered(Split) == true)
                         {
                             string OperatorS = CalculatorHelper.WhatOperator(Split);
-                            ExpressionSplitTemp.Add(CalculatorHelper.EvaluateLayeredExpression(Split, OperatorS).ToString());
+                            ExpressionSplitTwo.Add(CalculatorHelper.EvaluateLayeredExpression(Split, OperatorS).ToString());
                         }
-                        else { ExpressionSplitTemp.Add(Split); }
+                        else { ExpressionSplitTwo.Add(Split); }
                     }
                 }
+                --SplitOn;
 
-                foreach (var Spl in ExpressionSplit)
+                if (SplitOn == 4 | SplitOn == 2)
                 {
-
-                    if (SplitOn == 4 | SplitOn == 2)
+                    ExpressionTemp = String.Join("", ExpressionSplitTwo);
+                    ExpressionTemp.Replace("S", "");
+                    ExpressionTemp = ExpressionTemp.Replace("+", "S+S").Replace("+-", "S+-S").Replace("*", "S*S").Replace("/", "S/S").Replace("^", "S^S");
+                    ExpressionLocal = ExpressionLocal.Replace("S" + OperatorInduList[SplitOn] + "S", "^"); //remove 'S' from exponentials
+                    ExpressionSplitTwo = ExpressionTemp.Split("S").ToList();
+                    foreach (var Spl in ExpressionSplitTwo)
                     {
-
-
-                        int f = 0;
-                        while ((f < Numbers.Count()))//loop until reduced to a simple expression.
+                        var Operators = Regex.Matches(Spl, @"[\^+\-*/]").OfType<Match>().Select(m => m.Value).ToList();
+                        Numbers = Regex.Matches(Spl, @"[0-9]{1,50}[\\.,]{0,1}[0-9]{0,50}").OfType<Match>().Select(m => m.Value).ToList();
+                        while (Operators.Count >= 1 && Numbers.Count >= 2)
                         {
-                            var Operators = Regex.Matches(ExpressionTemp, @"[\^+\-*/]").OfType<Match>().Select(m => m.Value).ToList();
+                            Operators = Regex.Matches(Spl, @"[\^+\-*/]").OfType<Match>().Select(m => m.Value).ToList();
+                            Numbers = Regex.Matches(Spl, @"[0-9]{1,50}[\\.,]{0,1}[0-9]{0,50}").OfType<Match>().Select(m => m.Value).ToList();
                             int ReplaceMinus = Operators.FindIndex(s => s == "-");
                             if (ReplaceMinus != -1) { Operators[ReplaceMinus] = "+-"; }
                             ExpressionTemp = ExpressionTemp.Replace("-", "+-");
-                            Numbers = Regex.Matches(ExpressionTemp, @"[0-9]{1,50}[\\.,]{0,1}[0-9]{0,50}").OfType<Match>().Select(m => m.Value).ToList();
-                            if (Operators.Count() == 1) { string TempR = Numbers[0] + Operators[0] + Numbers[1]; ExpressionTemp = CalculatorHelper.EvaluateSimpleExpression(TempR).ToString(); break; }
+                            if (Operators.Count() == 1) { string TempR = Numbers[0] + Operators[0] + Numbers[1]; ExpressionSplitThree.Add(CalculatorHelper.EvaluateSimpleExpression(TempR).ToString());break;}
+                            else if(Operators.Count > 1 && Numbers.Count >= 3){
                             int OperatorIndex = ExpressionTemp.IndexOf(Operators[0]);
                             OperatorIndex = ExpressionTemp.IndexOf(Operators[1], OperatorIndex + 1);
                             string Temp = ExpressionTemp.Substring(0, OperatorIndex);
                             ExpressionTemp = ExpressionTemp.Remove(0, Temp.Length);
-                            ExpressionTemp = CalculatorHelper.EvaluateSimpleExpression(Temp).ToString() + ExpressionTemp;
-                            ++f;
+                            ExpressionSplitThree.Add(CalculatorHelper.EvaluateSimpleExpression(Temp).ToString());
+                            }else{ExpressionSplitThree.Add(Spl);}
+                           
                         }
-                        ++x;
+                        ExpressionTemp = String.Join("", ExpressionSplitTwo);
                         ExpressionTemp.Replace("S", "");
                         ExpressionTemp = ExpressionTemp.Replace("+", "S+S").Replace("+-", "S+-S").Replace("*", "S*S").Replace("/", "S/S").Replace("^", "S^S");
-                        ExpressionSplit = ExpressionTemp.Split("S").ToList();
+                        ExpressionLocal = ExpressionLocal.Replace("S" + OperatorInduList[SplitOn] + "S", "^"); //remove 'S' from exponentials
+                        ExpressionSplitTwo = ExpressionTemp.Split("S").ToList();
                         --SplitOn;
                     }
                 }
-                
+
             }
 
             return "Error";
