@@ -3,7 +3,7 @@ namespace ManyProjects
 {
     public static class CalculatorHelper
     {
-        const string SIMPLE_EXPRESSION_REGEX = "^[0-9]{1,50}[\\.,]{0,1}[0-9]{0,50}[+\\-^*/]{1}[0-9]{1,50}[\\.,]{0,1}[0-9]{0,50}$";
+        const string SIMPLE_EXPRESSION_REGEX = "^[0-9]{1,50}[\\.,]{0,1}[0-9]{0,50}[\\+]{0,1}[+\\-^*/]{1}[0-9]{1,50}[\\.,]{0,1}[0-9]{0,50}$";
 
         static CalculatorHelper()
         {
@@ -48,7 +48,7 @@ namespace ManyProjects
         {
             decimal Value1 = 0, Value2 = 0;
             int OperatorLocation = 0;
-            string[] Operators = { "+", "-", "*", "/", "^" };
+            string[] Operators = { "+", "+-", "*", "/", "^" };
             int index = 0;
 
             while ((OperatorLocation == 0) && index < Operators.Length)
@@ -67,9 +67,10 @@ namespace ManyProjects
             {
                 return Value1 + Value2;
             }
-            else if (Operator.Equals("-"))
+            else if (Operator.Equals("+-"))
             {
-                return Value1 - Value2;
+                Value2 = decimal.Parse(Expression.Substring(OperatorLocation));
+                return Value1 + Value2;
             }
             else if (Operator.Equals("*"))
             {
