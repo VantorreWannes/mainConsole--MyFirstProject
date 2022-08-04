@@ -103,75 +103,88 @@ namespace ManyProjects
         public static string EvaluateCompound(string Expression)
         {
             string ExpressionLocal = Expression;
-            string[] OperatorInduList = { "m", "-", "+", "/", "*", "^" };
+            string[] OperatorInduList = { "-", "+", "/", "*", "^" };
             ExpressionLocal = ExpressionLocal.Replace("+", "S+S").Replace("-", "S-S").Replace("*", "S*S").Replace("/", "S/S").Replace("^", "S^S");
             ExpressionLocal = ExpressionLocal.Replace("S^S", "^"); //remove 'S' from exponentials
             List<string> ExpressionSplit = ExpressionLocal.Split("S").ToList();
-            List<string> ExpressionSplitTwo = new List<string>();
-            List<string> ExpressionSplitThree = new List<string>();
-            int SplitOn = 5;
-            string[] Operator = { "m", "+-", "+", "/", "*", "^" };
-            var Numbers = Regex.Matches(ExpressionLocal, @"[0-9]{1,50}[\\.,]{0,1}[0-9]{0,50}").OfType<Match>().Select(m => m.Value).ToList();
+            int SplitOn = 4;
             string ExpressionTemp = "";
+            string Output = "error";
+
+            //SplitOn = 4
+            foreach (var Spl in ExpressionSplit)
+            {
+                string Split = Spl;
+
+                if (CalculatorHelper.IsSimple(Split) == true) { ExpressionTemp = ExpressionTemp + (CalculatorHelper.EvaluateSimpleExpression(Split).ToString()); }
+                else if (CalculatorHelper.IsLayered(Split) == true)
+                {
+                    string OperatorS = CalculatorHelper.WhatOperator(Split);
+                    ExpressionTemp = ExpressionTemp + (CalculatorHelper.EvaluateLayeredExpression(Split, OperatorS).ToString());
+                }
+                else { ExpressionTemp = ExpressionTemp + Split; }
+            }
+            SplitOn = 3;
+            ExpressionSplit.Clear();
             while (SplitOn >= 1)
             {
-                if (SplitOn == 5)
+                if (SplitOn == 3 | SplitOn == 1)
                 {
-                    foreach (var Spl in ExpressionSplit)
-                    {
-                        string Split = Spl;
-
-                        if (CalculatorHelper.IsSimple(Split) == true) { ExpressionSplitTwo.Add(CalculatorHelper.EvaluateSimpleExpression(Split).ToString()); }
-                        else if (CalculatorHelper.IsLayered(Split) == true)
-                        {
-                            string OperatorS = CalculatorHelper.WhatOperator(Split);
-                            ExpressionSplitTwo.Add(CalculatorHelper.EvaluateLayeredExpression(Split, OperatorS).ToString());
-                        }
-                        else { ExpressionSplitTwo.Add(Split); }
-                    }
-                }
-                --SplitOn;
-
-                if (SplitOn == 4 | SplitOn == 2)
-                {
-                    ExpressionTemp = String.Join("", ExpressionSplitTwo);
                     ExpressionTemp.Replace("S", "");
-                    ExpressionTemp = ExpressionTemp.Replace("+", "S+S").Replace("+-", "S+-S").Replace("*", "S*S").Replace("/", "S/S").Replace("^", "S^S");
-                    ExpressionLocal = ExpressionLocal.Replace("S" + OperatorInduList[SplitOn] + "S", "^"); //remove 'S' from exponentials
-                    ExpressionSplitTwo = ExpressionTemp.Split("S").ToList();
-                    foreach (var Spl in ExpressionSplitTwo)
+                    ExpressionTemp = ExpressionTemp.Replace("+", "S+S").Replace("-", "S+-S").Replace("*", "S*S").Replace("/", "S/S").Replace("^", "S^S");
+                    ExpressionTemp = ExpressionTemp.Replace("S" + OperatorInduList[SplitOn] + "S", OperatorInduList[SplitOn]); //remove 'S' from exponentials
+                    ExpressionSplit = ExpressionTemp.Split("S").ToList();
+                    while (ExpressionSplit.Count() > 1)
                     {
-                        var Operators = Regex.Matches(Spl, @"[\^+\-*/]").OfType<Match>().Select(m => m.Value).ToList();
-                        Numbers = Regex.Matches(Spl, @"[0-9]{1,50}[\\.,]{0,1}[0-9]{0,50}").OfType<Match>().Select(m => m.Value).ToList();
-                        while (Operators.Count >= 1 && Numbers.Count >= 2)
+                        foreach (var Spl in ExpressionSplit)
                         {
-                            Operators = Regex.Matches(Spl, @"[\^+\-*/]").OfType<Match>().Select(m => m.Value).ToList();
-                            Numbers = Regex.Matches(Spl, @"[0-9]{1,50}[\\.,]{0,1}[0-9]{0,50}").OfType<Match>().Select(m => m.Value).ToList();
+                            var Operators = Regex.Matches(Spl, @"[\^+\-*/]").OfType<Match>().Select(m => m.Value).ToList();
+                            var Numbers = Regex.Matches(Spl, @"[0-9]{1,50}[\\.,]{0,1}[0-9]{0,50}").OfType<Match>().Select(m => m.Value).ToList();
+                            if (Operators.Count() >= 1 && Numbers.Count() >= 1)
+                            {
+
+                                int OperatorIndex = Expression.IndexOf(Operators[0]);
+                                OperatorIndex = ExpressionTemp.IndexOf(Operators[1], OperatorIndex + 1);
+                                string Temp = ExpressionTemp.Substring(0, OperatorIndex);
+                                ExpressionTemp = ExpressionTemp.Remove(0, Temp.Length);
+                                ExpressionTemp = ExpressionTemp + (CalculatorHelper.EvaluateSimpleExpression(Spl).ToString());
+                            }
+                            else { ExpressionTemp = ExpressionTemp + Spl; }
+                            //while (Operators.Count >= 1 && Numbers.Count >= 2)
+                            //{
+                            //var Operators = Regex.Matches(Spl, @"[\^+\-*/]").OfType<Match>().Select(m => m.Value).ToList();
+                            /*Numbers = Regex.Matches(Spl, @"[0-9]{1,50}[\\.,]{0,1}[0-9]{0,50}").OfType<Match>().Select(m => m.Value).ToList();
                             int ReplaceMinus = Operators.FindIndex(s => s == "-");
                             if (ReplaceMinus != -1) { Operators[ReplaceMinus] = "+-"; }
                             ExpressionTemp = ExpressionTemp.Replace("-", "+-");
-                            if (Operators.Count() == 1) { string TempR = Numbers[0] + Operators[0] + Numbers[1]; ExpressionSplitThree.Add(CalculatorHelper.EvaluateSimpleExpression(TempR).ToString());break;}
-                            else if(Operators.Count > 1 && Numbers.Count >= 3){
-                            int OperatorIndex = ExpressionTemp.IndexOf(Operators[0]);
-                            OperatorIndex = ExpressionTemp.IndexOf(Operators[1], OperatorIndex + 1);
-                            string Temp = ExpressionTemp.Substring(0, OperatorIndex);
-                            ExpressionTemp = ExpressionTemp.Remove(0, Temp.Length);
-                            ExpressionSplitThree.Add(CalculatorHelper.EvaluateSimpleExpression(Temp).ToString());
-                            }else{ExpressionSplitThree.Add(Spl);}
-                           
+                            if (Operators.Count() == 1) { string TempR = Numbers[0] + Operators[0] + Numbers[1]; ExpressionSplitThree.Add(CalculatorHelper.EvaluateSimpleExpression(TempR).ToString()); break; }
+                            else if (Operators.Count > 1 && Numbers.Count >= 3)
+                            {
+                                int OperatorIndex = ExpressionTemp.IndexOf(Operators[0]);
+                                OperatorIndex = ExpressionTemp.IndexOf(Operators[1], OperatorIndex + 1);
+                                string Temp = ExpressionTemp.Substring(0, OperatorIndex);
+                                ExpressionTemp = ExpressionTemp.Remove(0, Temp.Length);
+                                ExpressionSplitThree.Add(CalculatorHelper.EvaluateSimpleExpression(Temp).ToString());
+                            }
+                            else { ExpressionSplitThree.Add(Spl); }
+
+                            //}
+                            ExpressionTemp = String.Join("", ExpressionSplitThree);
+                            ExpressionTemp.Replace("S", "");
+                            ExpressionTemp = ExpressionTemp.Replace("+", "S+S").Replace("+-", "S+-S").Replace("*", "S*S").Replace("/", "S/S").Replace("^", "S^S");
+                            ExpressionLocal = ExpressionLocal.Replace("S" + OperatorInduList[SplitOn] + "S", "^"); //remove 'S' from exponentials
+                            ExpressionSplitThree = ExpressionTemp.Split("S").ToList();*/
+
+                            --SplitOn;
                         }
-                        ExpressionTemp = String.Join("", ExpressionSplitTwo);
-                        ExpressionTemp.Replace("S", "");
-                        ExpressionTemp = ExpressionTemp.Replace("+", "S+S").Replace("+-", "S+-S").Replace("*", "S*S").Replace("/", "S/S").Replace("^", "S^S");
-                        ExpressionLocal = ExpressionLocal.Replace("S" + OperatorInduList[SplitOn] + "S", "^"); //remove 'S' from exponentials
-                        ExpressionSplitTwo = ExpressionTemp.Split("S").ToList();
-                        --SplitOn;
                     }
+                    //ExpressionTemp = String.Join("", ExpressionSplitThree);
+                    //if (CalculatorHelper.IsSimple(ExpressionTemp)) { Output = CalculatorHelper.EvaluateSimpleExpression(ExpressionTemp).ToString(); }
                 }
 
             }
 
-            return "Error";
+            return Output;
         }
 
 
