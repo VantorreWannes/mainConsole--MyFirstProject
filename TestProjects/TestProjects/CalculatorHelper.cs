@@ -48,7 +48,7 @@ namespace ManyProjects
         {
             decimal Value1 = 0, Value2 = 0;
             int OperatorLocation = 0;
-            string[] Operators = { "+", "+-", "*", "/", "^" };
+            string[] Operators = { "+", "-", "*", "/", "^" };
             int index = 0;
 
             while ((OperatorLocation == 0) && index < Operators.Length)
@@ -62,15 +62,15 @@ namespace ManyProjects
             Value1 = decimal.Parse(Expression.Substring(0, OperatorLocation));
             Value2 = decimal.Parse(Expression.Substring(OperatorLocation + 1));
             string Operator = Expression.Substring(OperatorLocation, 1);
-
+            
             if (Operator.Equals("+"))
             {
                 return Value1 + Value2;
             }
-            else if (Operator.Equals("+-"))
+            else if (Operator.Equals("-"))
             {
-                Value2 = decimal.Parse(Expression.Substring(OperatorLocation));
-                return Value1 + Value2;
+                string  Value2Minus = "-" + Value2.ToString();
+                return Value1 + decimal.Parse(Value2Minus);
             }
             else if (Operator.Equals("*"))
             {

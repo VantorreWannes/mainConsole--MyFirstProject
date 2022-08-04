@@ -6,10 +6,12 @@ namespace ManyProjects
         public static string OrderOfOperations()
         {
             Console.WriteLine("\n Input your desired compound expression.");
-            string CompoundExpression = "1-2^6*2";
+            //
+            //2*2+3-2^6/2*2
+            string CompoundExpression = "1*1*1-2+5^5/5*3/2+6";
             string LayeredExpression = "";
-            string SimpleExpression = "3+-2";
-            string BracketExpression = "(3*1*1)^2+((((5^5)/5)*3)/2)+6";
+            string SimpleExpression = "7-32";
+            string BracketExpression = "(2 * 2) + 3 - (((2^6) / 2) * 2)";
          
             //string OperatorS = CalculatorHelper.WhatOperator(LayeredExpression);
             //Console.WriteLine(CalculatorHelper.IsLayered(LayeredExpression));
@@ -18,10 +20,10 @@ namespace ManyProjects
             //Console.WriteLine(CalculatorHelper.IsSimple(SimpleExpression));
             //Console.WriteLine(CalculatorHelper.EvaluateSimpleExpression(SimpleExpression));
             
-            Console.WriteLine(CalculatorHelper.IsCompound(CompoundExpression));
+            //Console.WriteLine(CalculatorHelper.IsCompound(CompoundExpression));
             Console.WriteLine(CalculatorEvaluator.EvaluateCompound(CompoundExpression));
 
-            //Console.WriteLine(CalculatorEvaluator.AddBrackets(BracketExpression);
+            //Console.WriteLine(CalculatorEvaluator.AddBrackets(CompoundExpression));
             //Console.WriteLine(CalculatorEvaluator.MaxBrackets(BracketExpression));
             //Console.WriteLine("Finished Calculation: "+CalculatorEvaluator.WorkOutBrackets(BracketExpression));
             
